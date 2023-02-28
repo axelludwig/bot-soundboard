@@ -9,6 +9,10 @@
   "author": "burin et guidon",
   "license": "ISC",
   "dependencies": {
+    "-": "^0.0.1",
+    "express": "^4.18.2",
+    "g": "^2.0.1",
+    "nodemon": "^2.0.20",
     "socket.io": "^4.6.1"
   }
 }

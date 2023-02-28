@@ -16,6 +16,10 @@ io.on('connection', (socket) => {
     });
   });
 
+  io.on('test', (socket) => {
+    console.log("ok test");
+  })
+
 server.listen(3000, () => {
   console.log('listening on *:3000');
 });
