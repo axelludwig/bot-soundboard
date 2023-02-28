@@ -59,3 +59,5 @@ baseline.json
 aio/content/examples/.DS_Store
 
 .vs
+DEBUG
+*.esproj.user
