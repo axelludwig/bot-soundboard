@@ -61,3 +61,5 @@ aio/content/examples/.DS_Store
 
 .vs
 /back/package-lock.json
+DEBUG
+*.esproj.user
