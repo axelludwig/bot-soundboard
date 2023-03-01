@@ -16,7 +16,7 @@ app.use(cors({
 }));
 
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+    res.send({ data: 'OK' });
 });
 
 io.on('connection', (socket) => {
