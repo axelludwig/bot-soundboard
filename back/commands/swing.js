@@ -7,7 +7,7 @@ module.exports = {
 		.setName('swing')
 		.setDescription('I will play some nice music ;) !'),
 	async execute(interaction) {
-		let currentConnection = getVoiceConnection(interaction.guildId)
+		let currentConnection = getVoiceConnection(interaction.guild.id)
 		console.log("Current connection : " + currentConnection);
 		let connection = undefined;
 		if (currentConnection){
@@ -26,6 +26,7 @@ module.exports = {
 				noSubscriber: NoSubscriberBehavior.Play,
 			},
 		});
+
 		let audioPath = path.join(__dirname, 'sounds/audio.mp3');
 		console.log(audioPath)
 		const resource = createAudioResource(audioPath);
