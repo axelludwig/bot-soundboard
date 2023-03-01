@@ -67,14 +67,7 @@ for (const file of commandFiles) {
     }
 }
 
-discordClient.on(Events.MessageCreate, async interaction => {
-	console.log("TESTETST");
-	await interaction.reply("Ta gueule");
-});
-
-
 discordClient.on(Events.InteractionCreate, async interaction => {
-    console.log("testset");
 	if (!interaction.isChatInputCommand()) return;
 
     const command = interaction.client.commands.get(interaction.commandName);
