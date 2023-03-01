@@ -1,4 +1,6 @@
 /back/node_modules
+/back/discord-config.json
+
 .DS_STORE
 
 /dist/
