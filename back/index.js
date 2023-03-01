@@ -15,6 +15,7 @@ const io = require('socket.io')(server, {
 
 const {Client, Events, Collection, GatewayIntentBits } = require("discord.js");
 const discordConfig = require("./discord-config.json");
+require('./commands/ping.js');
 
 app.use(cors({
     origin: '*'
@@ -42,7 +43,7 @@ server.listen(3000, () => {
 });
 
 //Discord client setup
-const discordClient = new Client({intents: [GatewayIntentBits.Guilds]});
+const discordClient = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates]});
 
 discordClient.on('ready', () => {
   console.log(`Logged in as ${discordClient.user.tag}!`);
@@ -65,11 +66,17 @@ for (const file of commandFiles) {
 	}
 }
 
+discordClient.on(Events.MessageCreate, async interaction => {
+	console.log("TESTETST");
+	await interaction.reply("Ta gueule");
+});
+
+
 discordClient.on(Events.InteractionCreate, async interaction => {
     console.log("testset");
 	if (!interaction.isChatInputCommand()) return;
 
-	const command = interaction.discordClient.commands.get(interaction.commandName);
+	const command = interaction.client.commands.get(interaction.commandName);
 
 	if (!command) {
 		console.error(`No command matching ${interaction.commandName} was found.`);
