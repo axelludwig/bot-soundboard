@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { SocketService } from 'src/services/socket/socket.service';
 import { AxiosService, GetOptions } from "src/services/axios/axios.service"
 
+interface CustomFile {
+
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -35,8 +39,13 @@ export class AppComponent {
     })
   }
 
-  handleFileInput(files: FileList) {
-    this.fileToUpload = files.item(0);
+  handleFileInput(event: any) {
+    var files = event.target.files;
+    console.log(files.item(0));
+    // this.fileToUpload = files.item(0);
+    // files.map((file: CustomFile) => {
+
+    // })
   }
 
   uploadFileToActivity() {
