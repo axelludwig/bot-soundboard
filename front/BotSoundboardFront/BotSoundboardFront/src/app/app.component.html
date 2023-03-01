@@ -2,6 +2,14 @@
     <button mat-button color="primary" (click)="test()"> test socket </button>
     <button mat-button color="primary" (click)="testHttp()"> test http </button>
 
+    <button mat-raised-button color="primary">Upload sound</button>
+
+    <div class="form-group">
+        <label for="file">Choose File</label>
+        <input type="file" id="file" (change)="handleFileInput($event.target.files)">
+    </div>
+
+
     <ng-container *ngIf="socketConnection; then online; else offline"> </ng-container>
     <ng-template #online>
         <img src="../assets/wifi.svg" class="filter-green" />

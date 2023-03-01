@@ -15,13 +15,15 @@ export class AppComponent {
   private axiosService: AxiosService;
   private socketService: SocketService;
 
+  fileToUpload: File | null = null;
+
   constructor(socketService: SocketService, axiosService: AxiosService) {
 
     this.axiosService = axiosService;
     this.socketService = socketService;
 
     // this.socketService.onRestest().subscribe(() => {})
-    
+
     this.socketService.connect$.subscribe(() => {
       this.socketConnection = true;
       console.log('connexion socket super géniale');
@@ -31,6 +33,14 @@ export class AppComponent {
       this.socketConnection = false;
       console.log('déconnexion :( pas super géniale');
     })
+  }
+
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
+  }
+
+  uploadFileToActivity() {
+    console.log(this.fileToUpload);
   }
 
   test() {
