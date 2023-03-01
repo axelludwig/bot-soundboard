@@ -13,7 +13,7 @@ const io = require('socket.io')(server, {
     }
 });
 
-const {Client, Events, Collection, GatewayIntentBits } = require("discord.js");
+const { Client, Events, Collection, GatewayIntentBits } = require("discord.js");
 const discordConfig = require("./discord-config.json");
 
 app.use(cors({
@@ -26,6 +26,7 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
     console.log('a user connected');
+    io.emit("connection successful");
     socket.on('disconnect', () => {
         console.log('user disconnected\n');
     });
@@ -42,10 +43,10 @@ server.listen(3000, () => {
 });
 
 //Discord client setup
-const discordClient = new Client({intents: [GatewayIntentBits.Guilds]});
+const discordClient = new Client({ intents: [GatewayIntentBits.Guilds] });
 
 discordClient.on('ready', () => {
-  console.log(`Logged in as ${discordClient.user.tag}!`);
+    console.log(`Logged in as ${discordClient.user.tag}!`);
 });
 
 discordClient.commands = new Collection();
@@ -54,14 +55,14 @@ const commandsPath = path.join(__dirname, 'commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
-	const filePath = path.join(commandsPath, file);
-	const command = require(filePath);
-	// Set a new item in the Collection with the key as the command name and the value as the exported module
-	if ('data' in command && 'execute' in command) {
-		discordClient.commands.set(command.data.name, command);
-	} else {
-		console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
-	}
+    const filePath = path.join(commandsPath, file);
+    const command = require(filePath);
+    // Set a new item in the Collection with the key as the command name and the value as the exported module
+    if ('data' in command && 'execute' in command) {
+        discordClient.commands.set(command.data.name, command);
+    } else {
+        console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
+    }
 }
- 
+
 discordClient.login(discordConfig.BOT_TOKEN);

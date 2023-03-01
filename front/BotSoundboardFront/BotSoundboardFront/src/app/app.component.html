@@ -1,6 +1,13 @@
 <div id="main">
-    <button (click)="test()"> test socket </button>
-    <button mat-stroked-button (click)="testHttp()"> test http </button>
-    <mat-slide-toggle>Toggle me!</mat-slide-toggle>
+    <button mat-button color="primary" (click)="test()"> test socket </button>
+    <button mat-button color="primary" (click)="testHttp()"> test http </button>
+
+    <ng-container *ngIf="socketConnection; then online; else offline"> </ng-container>
+    <ng-template #online>
+        <img src="../assets/wifi.svg" class="filter-green" />
+    </ng-template>
+    <ng-template #offline>
+        <img src="../assets/wifi.svg" class="filter-red" />
+    </ng-template>
 
 </div>
