@@ -1,37 +1,33 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { joinVoiceChannel, createAudioPlayer, createAudioResource, NoSubscriberBehavior, getVoiceConnection   } = require('@discordjs/voice');
+const { joinVoiceChannel, createAudioPlayer, createAudioResource } = require('@discordjs/voice');
 const path = require('node:path');
+const voiceData = require('../voice-data.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('swing')
 		.setDescription('I will play some nice music ;) !'),
 	async execute(interaction) {
-		let currentConnection = getVoiceConnection(interaction.guild.id)
-		console.log("Current connection : " + currentConnection);
-		let connection = undefined;
-		if (currentConnection){
-			connection = currentConnection;
-		}
-		else{
-			connection = joinVoiceChannel({
-				channelId: interaction.member.voice.channelId,
-				guildId: interaction.guildId,
-				adapterCreator: interaction.guild.voiceAdapterCreator,
-			});
-		}
+		console.log("Current guildId is " + interaction.guildId + ", channelId is " + interaction.member.voice.channelId);
 
-		const player = createAudioPlayer({
-			behaviors: {
-				noSubscriber: NoSubscriberBehavior.Play,
-			},
+		let connection = joinVoiceChannel({
+			channelId: interaction.member.voice.channelId,
+			guildId: interaction.guildId,
+			adapterCreator: interaction.guild.voiceAdapterCreator
 		});
 
-		let audioPath = path.join(__dirname, 'sounds/audio.mp3');
-		console.log(audioPath)
-		const resource = createAudioResource(audioPath);
-		player.play(resource);
+		voiceData.connections[interaction.guildId] = connection;
 
-		await connection.subscribe(player);
+
+		const player = createAudioPlayer();
+
+		let audioPath = path.join(__dirname, 'sounds/audio.mp3');
+		const resource = createAudioResource(audioPath, { inlineVolume: true });
+		resource.volume.setVolume(0.5);
+
+		player.play(resource);
+		connection.subscribe(player);
+
+		await interaction.reply('Ca part en musique ;)');
 	},
 };
