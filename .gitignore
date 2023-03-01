@@ -67,3 +67,4 @@ DEBUG
 *.esproj.user
 /back/discord-config.json
 /BotSoundboard-Front/BotSoundboardFront/BotSoundboardFront/package-lock.json
+/BotSoundboard-Front/BotSoundboardFront/BotSoundboardFront/.angular/cache/15.2.0
