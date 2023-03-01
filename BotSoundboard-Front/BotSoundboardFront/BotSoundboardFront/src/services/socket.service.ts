@@ -10,10 +10,12 @@ export class SocketService {
 	// emit event
 	test() {
 		this.socket.emit('test');
+		console.log('ok super');		
 	} 
 
 	// listen event
-	onTest() {
-		return this.socket.fromEvent('test');
+	onRestest() {
+		return this.socket.fromEvent('restest');
+		
 	}
 }

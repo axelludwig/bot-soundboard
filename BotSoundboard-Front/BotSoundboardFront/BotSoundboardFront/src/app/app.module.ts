@@ -5,8 +5,6 @@ import { AppComponent } from './app.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
-
-
 @NgModule({
   declarations: [
     AppComponent
@@ -17,4 +15,6 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+ }

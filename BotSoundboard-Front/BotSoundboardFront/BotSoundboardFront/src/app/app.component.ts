@@ -11,6 +11,14 @@ export class AppComponent {
 
   constructor(private socketService: SocketService
   ) {
-
+    this.socketService.onRestest().subscribe(( ) => {
+      console.log('super génial');      
+    })
   }
+
+  test() {
+    this.socketService.test();
+  }
+
+  
 }
