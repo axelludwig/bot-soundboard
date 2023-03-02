@@ -46,7 +46,10 @@ exports.getCurrentChannel = async function () {
 }
 exports.exportCurrentChannel = async function(){
     let currentChannel = exports.getCurrentChannel();
-
+    if (!currentChannel){
+        return undefined;
+    }
+    
     return exportChannel(currentChannel);
 }
 exports.joinChannel = async function (channelId) {
