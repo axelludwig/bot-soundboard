@@ -15,9 +15,8 @@ io.on('connection', (socket) => {
 
     socket.on('getChannelsInfos', (socket) => {
         channelManager.getChannels().then((result => {
-            io.emit('getChannelsInfosResult', JSON.stringify(result));
+            socket.emit('getChannelsInfosResult', JSON.stringify(result));
         }));
-        
     });
 });
 
