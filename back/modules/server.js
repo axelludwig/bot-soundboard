@@ -5,19 +5,32 @@ const server = http.createServer(app);
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
-
 require('dotenv').config();
+const channelManager = require('./discord/channel-manager');
 
 app.use(cors({
     origin: '*'
 }));
 
-app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: true }))
+app.use(bodyParser.json({ limit: '1000mb' }));
+app.use(bodyParser.urlencoded({ limit: '1000mb', extended: true }));
 
 app.get('/', (req, res) => {
     res.send({ data: 'OK' });
 });
+
+app.get('/channels', (req, res) => {
+    channelManager.getChannels().then((channels => {
+        res.send(JSON.stringify(channels))
+    }));
+});
+
+app.get('/currentChannel', (req, res) => {
+    channelManager.getCurrentChannel().then((channel => {
+        res.send(JSON.stringify(channel))
+    }));
+});
+
 
 app.post('/sounds', (req, res) => {
     var soundPath = path.join(__dirname, process.env.soundsFolder, req.body.name);

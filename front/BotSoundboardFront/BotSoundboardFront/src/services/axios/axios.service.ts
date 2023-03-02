@@ -1,6 +1,8 @@
 import { ErrorHandler, Injectable } from '@angular/core';
 import axios from "axios";
 import { AxiosInstance } from "axios";
+import { environment } from '../../environments/environment';
+
 
 export interface Params {
   [key: string]: any;
@@ -39,7 +41,7 @@ export class AxiosService {
     try {
       var axiosResponse = await this.axiosClient.request<T>({
         method: "get",
-        url: options.url,
+        url: environment.serverURL + options.url,
         params: options.params
       });
       return (axiosResponse.data);
@@ -49,12 +51,12 @@ export class AxiosService {
     }
   }
 
-  public async post<T>(options: GetOptions): Promise<T> {    
+  public async post<T>(options: GetOptions): Promise<T> {
     try {
       var axiosResponse = await this.axiosClient.request<T>({
         method: "post",
-        url: options.url,
-        data: options.params        
+        url: environment.serverURL + options.url,
+        data: options.params
       });
       return (axiosResponse.data);
     } catch (error) {

@@ -9,15 +9,17 @@ import { CommonModule } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GuildsListComponent } from './guilds-list/guilds-list.component';
 
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GuildsListComponent
   ],
-  imports: [CommonModule,
+  imports: [CommonModule, 
     BrowserModule, SocketIoModule.forRoot(config), MatSlideToggleModule, MatCheckboxModule, MatButtonModule, BrowserAnimationsModule, MatInputModule
   ],
   exports: [],

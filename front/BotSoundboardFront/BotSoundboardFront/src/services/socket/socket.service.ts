@@ -23,7 +23,6 @@ export class SocketService {
 
 		this.socket.on('getChannelsInfosResult', (res: any) => {
 			console.log(res);
-
 		})
 
 	}
@@ -33,11 +32,12 @@ export class SocketService {
 		this.socket.emit('test');
 	}
 
-	getChannelsInfos() {
-		this.socket.emit('getChannelsInfos');
-	}
 
-	// listen event
+
+	// getChannelsInfos() {
+	// 	this.socket.emit('getChannelsInfos', { 'salkut': "guy" });
+	// }
+
 	onRestest() {
 		return this.socket.fromEvent('restest');
 	}
@@ -48,5 +48,13 @@ export class SocketService {
 
 	onDisconnect(): void {
 		this._disconnect.next(true);
+	}
+
+	joinChannel(id: string) {
+		this.socket.emit("joinChannel", id);
+	}
+
+	leaveChannel() {
+		this.socket.emit("leaveChannel");
 	}
 }

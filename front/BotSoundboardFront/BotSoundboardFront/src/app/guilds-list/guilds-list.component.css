@@ -1,0 +1,14 @@
+.channel {
+    color: black;
+    display: inline-block
+}
+
+.channel:hover {
+    color: white;
+    background-color: black;
+    cursor: pointer;
+}
+
+.selected-channel{
+    color: green;
+}

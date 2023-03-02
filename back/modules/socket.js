@@ -10,28 +10,26 @@ const io = require("socket.io")(serverManager.server, {
 
 io.on('connection', (socket) => {
     console.log('a user connected');
-    socket.on('test', (socket) => {
+    socket.on('test', (res) => {
         io.emit("restest");
     })
 
-    socket.on('getChannelsInfos', (data) => {
-        channelManager.exportChannels().then((result => {
-            socket.emit('getChannelsInfosResult', result);
-        }));
-    });
-
     socket.on('joinChannel', (data) => {
+        console.log(data);
         channelManager.joinChannel(data);
     });
-    
+
     socket.on('leaveChannel', (data) => {
         channelManager.leaveChannel();
     });
 
     socket.on('playSound', (data) => {
         soundManager.playSound(data);
+    })
+
+    socket.on('disconnect', (socket) => {
+        console.log('a user disconnected');
     });
 });
-
 
 exports.io = io;
