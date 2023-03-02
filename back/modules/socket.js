@@ -13,11 +13,13 @@ io.on('connection', (socket) => {
         io.emit("restest");
     })
 
-    socket.on('getChannelsInfos', (socket) => {
+    socket.on('getChannelsInfos', (data) => {
         channelManager.getChannels().then((result => {
-            socket.emit('getChannelsInfosResult', JSON.stringify(result));
+            socket.emit('getChannelsInfosResult', result);
         }));
     });
+    
 });
+
 
 exports.io = io;
