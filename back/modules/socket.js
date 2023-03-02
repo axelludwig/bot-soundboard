@@ -1,5 +1,6 @@
 const serverManager = require('./server')
-const channelManager = require('./channel-manager');
+const channelManager = require('./discord/channel-manager');
+const soundManager = require('./discord/sound-manager');
 const io = require("socket.io")(serverManager.server, {
     cors: {
         origin: "*",
@@ -14,11 +15,22 @@ io.on('connection', (socket) => {
     })
 
     socket.on('getChannelsInfos', (data) => {
-        channelManager.getChannels().then((result => {
+        channelManager.exportChannels().then((result => {
             socket.emit('getChannelsInfosResult', result);
         }));
     });
+
+    socket.on('joinChannel', (data) => {
+        channelManager.joinChannel(data);
+    });
     
+    socket.on('leaveChannel', (data) => {
+        channelManager.leaveChannel();
+    });
+
+    socket.on('playSound', (data) => {
+        soundManager.playSound(data);
+    });
 });
 
 

@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const soundManager = require('../modules/sound-manager.js');
+const soundManager = require('../modules/discord/sound-manager.js');
 
 module.exports = {
     data: new SlashCommandBuilder()

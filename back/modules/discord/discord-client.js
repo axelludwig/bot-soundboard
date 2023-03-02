@@ -1,5 +1,5 @@
 const { Client, Events, Collection, GatewayIntentBits } = require("discord.js");
-const discordConfig = require("../discord-config.json");
+const discordConfig = require("../../discord-config.json");
 const path = require('node:path');
 const fs = require('node:fs');
 
@@ -12,7 +12,7 @@ exports.discordClient.on('ready', () => {
 
 exports.discordClient.commands = new Collection();
 
-const commandsPath = path.join(__dirname, '../commands');
+const commandsPath = path.join(__dirname, '../../commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
 
 for (const file of commandFiles) {
