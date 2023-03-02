@@ -4,13 +4,13 @@ const path = require('node:path');
 const fs = require('node:fs');
 
 //Discord client setup
-const discordClient = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates] });
+exports.discordClient = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates] });
 
-discordClient.on('ready', () => {
-    console.log(`Logged in as ${discordClient.user.tag}!`);
+exports.discordClient.on('ready', () => {
+    console.log(`Logged in as ${exports.discordClient.user.tag}!`);
 });
 
-discordClient.commands = new Collection();
+exports.discordClient.commands = new Collection();
 
 const commandsPath = path.join(__dirname, '../commands');
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
@@ -20,14 +20,14 @@ for (const file of commandFiles) {
     const command = require(filePath);
     // Set a new item in the Collection with the key as the command name and the value as the exported module
     if ('data' in command && 'execute' in command) {
-        discordClient.commands.set(command.data.name, command);
+        exports.discordClient.commands.set(command.data.name, command);
         console.log("Added command " + command.data.name);
     } else {
         console.log(`[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`);
     }
 }
 
-discordClient.on(Events.InteractionCreate, async interaction => {
+exports.discordClient.on(Events.InteractionCreate, async interaction => {
     if (!interaction.isChatInputCommand()) return;
 
     const command = interaction.client.commands.get(interaction.commandName);
@@ -49,4 +49,4 @@ discordClient.on(Events.InteractionCreate, async interaction => {
     }
 });
 
-discordClient.login(discordConfig.BOT_TOKEN);
+exports.discordClient.login(discordConfig.BOT_TOKEN);
