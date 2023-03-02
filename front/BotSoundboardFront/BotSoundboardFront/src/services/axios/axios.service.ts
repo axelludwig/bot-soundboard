@@ -49,12 +49,12 @@ export class AxiosService {
     }
   }
 
-  public async post<T>(options: GetOptions): Promise<T> {
+  public async post<T>(options: GetOptions): Promise<T> {    
     try {
       var axiosResponse = await this.axiosClient.request<T>({
         method: "post",
         url: options.url,
-        params: options.params
+        data: options.params        
       });
       return (axiosResponse.data);
     } catch (error) {

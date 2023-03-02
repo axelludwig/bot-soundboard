@@ -2,17 +2,19 @@
     <button mat-button color="primary" (click)="test()"> test socket </button>
     <button mat-button color="primary" (click)="testHttp()"> test http </button>
 
-    <button mat-raised-button color="primary">Upload sound</button>
-
-    <!-- <div class="form-group">
-        <label for="file">Choose File</label>
-        <input type="file" id="file" (change)="handleFileInput($event.target.files)">
-    </div> -->
 
     <div class="form-group">
-        <input type="file" id="files" multiple (change)="handleFileInput($event)">
+        <label for="file">Choose File</label>
+        <input multiple type="file" id="file" (change)="onFileSelect($event)">
     </div>
 
+    <!-- <div class="form-group">
+        <input type="file" id="files" multiple (change)="onFileSelect($event)">
+    </div> -->
+
+    <button type="button" mat-raised-button color="primary" (click)="fileInput.click()">Choose File</button>
+    <input accept="sound/mp3, sound/ogg" multiple hidden (change)="onFileChange()" #fileInput type="file" id="file">
+    <button disabled="{{!this.hasFiles}}" mat-raised-button color="primary" (click)="uploadFile()">Upload sound</button>
 
     <ng-container *ngIf="socketConnection; then online; else offline"> </ng-container>
     <ng-template #online>
