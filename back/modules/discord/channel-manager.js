@@ -10,7 +10,7 @@ exports.getChannels = async function () {
     let filteredChannels = [];
 
     channels.forEach((value, key) => {
-        if (value.type ===2){
+        if (value.type === 2) {
             filteredChannels.push(value);
         }
     });
@@ -22,9 +22,7 @@ exports.exportChannels = async function () {
 
     let result = [];
     channels.forEach((value) => {
-        let channelObj = {};
-        channelObj.name = value.name;
-        channelObj.id = value.id;
+        let channelObj = exportChannel(value);
         result.push(channelObj);
     });
 
@@ -46,6 +44,11 @@ exports.getCurrentChannel = async function () {
 
     return undefined;
 }
+exports.exportCurrentChannel = async function(){
+    let currentChannel = exports.getCurrentChannel();
+
+    return exportChannel(currentChannel);
+}
 exports.joinChannel = async function (channelId) {
     let myGuild = await guildManager.getCurrentGuild();
 
@@ -66,4 +69,12 @@ exports.leaveChannel = async function () {
         connection.destroy();
         storedConnections[myGuild.id] = undefined;
     }
+}
+
+function exportChannel(channel){
+    let channelObj = {};
+    channelObj.name = channel.name;
+    channelObj.id = channel.id;
+
+    return channelObj;
 }
