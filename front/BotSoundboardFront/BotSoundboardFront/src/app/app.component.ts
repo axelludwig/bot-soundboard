@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { SocketService } from 'src/services/socket/socket.service';
 import { AxiosService, GetOptions } from "src/services/axios/axios.service"
-
-interface CustomFile {
-
-}
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -19,14 +16,14 @@ export class AppComponent {
   private axiosService: AxiosService;
   private socketService: SocketService;
 
-  fileToUpload: File | null = null;
+  filesToUpload: Iterable<File> = [];
 
   constructor(socketService: SocketService, axiosService: AxiosService) {
 
     this.axiosService = axiosService;
     this.socketService = socketService;
 
-    // this.socketService.onRestest().subscribe(() => {})
+    this.socketService.onRestest().subscribe(() => {})
 
     this.socketService.connect$.subscribe(() => {
       this.socketConnection = true;
@@ -41,15 +38,30 @@ export class AppComponent {
 
   handleFileInput(event: any) {
     var files = event.target.files;
-    console.log(files.item(0));
-    // this.fileToUpload = files.item(0);
-    // files.map((file: CustomFile) => {
+    this.filesToUpload = files;
+    // console.log(files);
+    // files.map((file: any) => {
+    //   console.log(file);
 
     // })
   }
 
-  uploadFileToActivity() {
-    console.log(this.fileToUpload);
+  uploadFile() {
+    var options: GetOptions = {
+      url: environment.serverURL + "/images"
+    }
+
+
+    Array.from(this.filesToUpload).forEach(file => {
+      console.log(file);
+
+    })
+    // this.axiosService.get(options).then((res) => {
+    //   console.log(res);
+    // })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   })
   }
 
   test() {
@@ -58,7 +70,7 @@ export class AppComponent {
 
   testHttp() {
     var options: GetOptions = {
-      url: "http://localhost:3000/",
+      url: environment.serverURL + "/"
     }
     this.axiosService.get(options).then((res) => {
       console.log(res);

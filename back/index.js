@@ -1,50 +1,16 @@
-const express = require('express');
-const app = express();
-const cors = require('cors');
-const http = require('http');
-const server = http.createServer(app);
-const { Server } = require("socket.io");
 const { send } = require('process');
 const path = require('node:path');
 const fs = require('node:fs');
-const io = require('socket.io')(server, {
-    cors: {
-        origin: '*',
-    }
-});
+const serverManager = require('./modules/server')
+const socketManager = require('./modules/socket')
+
 
 const { Client, Events, Collection, GatewayIntentBits } = require("discord.js");
 const discordConfig = require("./discord-config.json");
 require('./commands/ping.js');
 
-app.use(cors({
-    origin: '*'
-}));
-
-app.get('/', (req, res) => {
-    res.send({ data: 'OK' });
-});
-
-io.on('connection', (socket) => {
-    console.log('a user connected');
-    io.emit("connection successful");
-    socket.on('disconnect', () => {
-        console.log('user disconnected\n');
-    });
-
-    socket.on('test', (socket) => {
-        console.log("ok test");
-        io.emit("restest");
-    })
-});
-
-
-server.listen(3000, () => {
-    console.log('listening on *:3000');
-});
-
 //Discord client setup
-const discordClient = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates]});
+const discordClient = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates] });
 
 discordClient.on('ready', () => {
     console.log(`Logged in as ${discordClient.user.tag}!`);
@@ -68,7 +34,7 @@ for (const file of commandFiles) {
 }
 
 discordClient.on(Events.InteractionCreate, async interaction => {
-	if (!interaction.isChatInputCommand()) return;
+    if (!interaction.isChatInputCommand()) return;
 
     const command = interaction.client.commands.get(interaction.commandName);
 
