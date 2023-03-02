@@ -1,5 +1,5 @@
 const serverManager = require('./server')
-const channelManager = require('../modules/channel-manager');
+const channelManager = require('./channel-manager');
 const io = require("socket.io")(serverManager.server, {
     cors: {
         origin: "*",
@@ -14,8 +14,10 @@ io.on('connection', (socket) => {
     })
 
     socket.on('getChannelsInfos', (socket) => {
-        let channelsInfos = channelManager.getChannels();
-        io.emit(channelsInfos);
+        channelManager.getChannels().then((result => {
+            io.emit(JSON.stringify(result));
+        }));
+        
     });
 });
 
