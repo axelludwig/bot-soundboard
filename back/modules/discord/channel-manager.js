@@ -7,20 +7,25 @@ const storedConnections = {};
 exports.getChannels = async function () {
     let myGuild = await guildManager.getCurrentGuild();
     let channels = await myGuild.channels.fetch();
+    let filteredChannels = [];
 
-    return channels;
+    channels.forEach((value, key) => {
+        if (value.type ===2){
+            filteredChannels.push(value);
+        }
+    });
+
+    return filteredChannels;
 }
 exports.exportChannels = async function () {
     let channels = await exports.getChannels();
 
     let result = [];
-    channels.forEach((value, key) => {
-        if (value.type === 2) {
-            let channelObj = {};
-            channelObj.name = value.name;
-            channelObj.id = key;
-            result.push(channelObj);
-        }
+    channels.forEach((value) => {
+        let channelObj = {};
+        channelObj.name = value.name;
+        channelObj.id = value.id;
+        result.push(channelObj);
     });
 
     return result;
@@ -28,15 +33,15 @@ exports.exportChannels = async function () {
 
 exports.getCurrentChannel = async function () {
     let channels = await exports.getChannels();
-    console.log()
+
     let results = channels.filter(channel =>
         channel.members.some(member =>
             member.user.id === discordConfig.clientId
         )
     );
 
-    if (results.size > 0) {
-        return Array.from(results.values())[0];
+    if (results.length > 0) {
+        return results[0];
     }
 
     return undefined;

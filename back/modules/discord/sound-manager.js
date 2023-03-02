@@ -6,10 +6,11 @@ exports.playSound = async function (soundName) {
 
     if (!channel) {
         //Bot not in channel
+        console.log("Bot is not inside a channel");
         return;
     }
 
-    let voiceConnection = channelManager.joinChannel(channel.id);
+    let voiceConnection = await channelManager.joinChannel(channel.id);
 
     const player = createAudioPlayer();
 
