@@ -21,11 +21,20 @@ export class SocketService {
 			this.onDisconnect();
 		})
 
+		this.socket.on('getChannelsInfosResult', (res: any) => {
+			console.log(res);
+
+		})
+
 	}
 
 	// emit event
 	test() {
 		this.socket.emit('test');
+	}
+
+	getChannelsInfos() {
+		this.socket.emit('getChannelsInfos');
 	}
 
 	// listen event

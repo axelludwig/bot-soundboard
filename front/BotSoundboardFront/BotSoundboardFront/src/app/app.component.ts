@@ -101,4 +101,8 @@ export class AppComponent {
         console.log(err);
       })
   }
+
+  getChannels() {
+    this.socketService.getChannelsInfos();
+  }
 }
