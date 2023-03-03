@@ -94,7 +94,7 @@ function exportChannel(channel) {
     channel.members.forEach((value) => {
         let member = {}
         member.id = value.id;
-        member.name = value.nickname;
+        member.name = value.user.username;
         members.push(member);
     });
 
