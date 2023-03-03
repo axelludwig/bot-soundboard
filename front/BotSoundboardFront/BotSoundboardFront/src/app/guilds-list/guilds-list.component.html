@@ -3,10 +3,20 @@
 
 <button mat-button color="primary" (click)="getChannels()"> get channels </button>
 
-<div *ngFor="let channel of channels" class="channels">
-    <div [class.selected-channel]="currentChannel !== null && channel.id === currentChannel.id"
-        (click)="channelClick(channel.id)" class="channel">
-        <h4> {{channel.name}}{{channel.id}}</h4>
+
+<ng-container *ngIf="gotCurrentChannel; then loaded; else notLoaded"> </ng-container>
+
+<ng-template #loaded>
+    <div *ngFor="let channel of channels" class="channels">
+        <div [class.selected-channel]="currentChannel !== null && channel.id === currentChannel.id"
+            (click)="channelClick(channel.id)" class="channel">
+            <h4> {{channel.name}}{{channel.id}}</h4>
+        </div>
     </div>
-</div>
+</ng-template>
+
+<ng-template #notLoaded>
+    <mat-spinner></mat-spinner>
+</ng-template>
+
 <button (click)="leaveChannel()"> quitter </button>
