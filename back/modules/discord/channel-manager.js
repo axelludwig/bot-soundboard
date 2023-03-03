@@ -40,12 +40,12 @@ module.exports.exportChannels = async function () {
     return result;
 }
 
-module.exports.getCurrentChannel = async function () {
+module.exports.getUserChannel = async function(userId){
     let channels = await exports.getChannels();
 
     let results = channels.filter(channel =>
         channel.members.some(member =>
-            member.user.id === discordConfig.clientId
+            member.user.id === userId
         )
     );
 
@@ -54,6 +54,10 @@ module.exports.getCurrentChannel = async function () {
     }
 
     return undefined;
+}
+
+module.exports.getCurrentChannel = async function () {
+    return await module.exports.getUserChannel(discordConfig.clientId);
 }
 module.exports.exportCurrentChannel = async function () {
     let currentChannel = await exports.getCurrentChannel();
