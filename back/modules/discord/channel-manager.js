@@ -4,7 +4,7 @@ const discordConfig = require("../../discord-config.json");
 
 const storedConnections = {};
 
-exports.getChannels = async function () {
+module.exports.getChannels = async function () {
     let myGuild = await guildManager.getCurrentGuild();
     let channels = await myGuild.channels.fetch();
     let filteredChannels = [];
@@ -17,7 +17,7 @@ exports.getChannels = async function () {
 
     return filteredChannels.sort(sortChannels);
 }
-exports.exportChannels = async function () {
+module.exports.exportChannels = async function () {
     let channels = await exports.getChannels();
 
     let result = [];
@@ -29,7 +29,7 @@ exports.exportChannels = async function () {
     return result;
 }
 
-exports.getCurrentChannel = async function () {
+module.exports.getCurrentChannel = async function () {
     let channels = await exports.getChannels();
 
     let results = channels.filter(channel =>
@@ -44,7 +44,7 @@ exports.getCurrentChannel = async function () {
 
     return undefined;
 }
-exports.exportCurrentChannel = async function () {
+module.exports.exportCurrentChannel = async function () {
     let currentChannel = exports.getCurrentChannel();
     if (!currentChannel) {
         return undefined;
@@ -52,7 +52,7 @@ exports.exportCurrentChannel = async function () {
 
     return exportChannel(currentChannel);
 }
-exports.joinChannel = async function (channelId) {
+module.exports.joinChannel = async function (channelId) {
     let myGuild = await guildManager.getCurrentGuild();
 
     const voiceConnection = joinVoiceChannel({
@@ -65,7 +65,7 @@ exports.joinChannel = async function (channelId) {
 
     return voiceConnection;
 }
-exports.leaveChannel = async function () {
+module.exports.leaveChannel = async function () {
     let myGuild = await guildManager.getCurrentGuild();
     let connection = storedConnections[myGuild.id];
     if (connection) {
