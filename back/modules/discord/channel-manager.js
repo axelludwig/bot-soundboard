@@ -1,6 +1,7 @@
 const guildManager = require("./guild-manager");
 const { joinVoiceChannel } = require('@discordjs/voice');
 const discordConfig = require("../../discord-config.json");
+const membersManager = require("./member-manager");
 
 const storedConnections = {};
 let cachedChannels = undefined;
@@ -88,6 +89,16 @@ function exportChannel(channel) {
     let channelObj = {};
     channelObj.name = channel.name;
     channelObj.id = channel.id;
+
+    let members = [];
+    channel.members.forEach((value) => {
+        let member = {}
+        member.id = value.id;
+        member.name = value.nickname;
+        members.push(member);
+    });
+
+    channelObj.members = members;
 
     return channelObj;
 }
