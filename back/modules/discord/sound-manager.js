@@ -1,5 +1,7 @@
 const { createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
 const channelManager = require('./channel-manager');
+const fs = require('fs');
+const path = require('path');
 
 exports.playSound = async function (soundName) {
     let channel = await channelManager.getCurrentChannel();
@@ -29,4 +31,14 @@ exports.playSound = async function (soundName) {
     });
 
     voiceConnection.subscribe(player);
+}
+
+exports.exportSounds = function () {
+    let result = [];
+    fs.readdirSync(path.join(__dirname, '../../sounds'))
+        .forEach(file => {
+            result.push(path.parse(file).name);
+        });
+
+    return result;
 }

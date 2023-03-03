@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 require('dotenv').config();
 const channelManager = require('./discord/channel-manager');
+const soundManager = require('./discord/sound-manager');
 
 app.use(cors({
     origin: '*'
@@ -29,6 +30,10 @@ app.get('/currentChannel', (req, res) => {
     channelManager.getCurrentChannel().then((channel => {
         res.send(JSON.stringify(channel))
     }));
+});
+
+app.get('/getSounds', (req, res) => {
+    res.send(JSON.stringify(soundManager.exportSounds()));
 });
 
 app.post('/sounds', (req, res) => {
