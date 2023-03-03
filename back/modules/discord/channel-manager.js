@@ -15,7 +15,7 @@ exports.getChannels = async function () {
         }
     });
 
-    return filteredChannels;
+    return filteredChannels.sort(sortChannels);
 }
 exports.exportChannels = async function () {
     let channels = await exports.getChannels();
@@ -44,12 +44,12 @@ exports.getCurrentChannel = async function () {
 
     return undefined;
 }
-exports.exportCurrentChannel = async function(){
+exports.exportCurrentChannel = async function () {
     let currentChannel = exports.getCurrentChannel();
-    if (!currentChannel){
+    if (!currentChannel) {
         return undefined;
     }
-    
+
     return exportChannel(currentChannel);
 }
 exports.joinChannel = async function (channelId) {
@@ -74,10 +74,14 @@ exports.leaveChannel = async function () {
     }
 }
 
-function exportChannel(channel){
+function exportChannel(channel) {
     let channelObj = {};
     channelObj.name = channel.name;
     channelObj.id = channel.id;
 
     return channelObj;
+}
+
+function sortChannels(a, b) {
+    return a.position - b.position;
 }
