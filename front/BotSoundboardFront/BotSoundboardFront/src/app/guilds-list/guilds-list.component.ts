@@ -29,6 +29,10 @@ export class GuildsListComponent {
 
     this.getChannels();
     this.getCurrentChannel();
+
+    this.socketService.botChangeChannel$.subscribe((id: string) => {
+      this.currentChannel = this.getChannelById(id);
+    })
   }
 
   getChannels() {
