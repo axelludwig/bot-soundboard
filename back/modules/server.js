@@ -31,7 +31,6 @@ app.get('/currentChannel', (req, res) => {
     }));
 });
 
-
 app.post('/sounds', (req, res) => {
     var soundPath = path.join(__dirname, process.env.soundsFolder, req.body.name);
     require("fs").writeFile(soundPath, req.body.data, 'base64', () => {

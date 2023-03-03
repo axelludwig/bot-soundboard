@@ -21,6 +21,7 @@ export class GuildsListComponent {
 
   channels: Channel[] = [];
   currentChannel: Channel | null = null;
+  gotCurrentChannel: boolean = false;
 
   constructor(socketService: SocketService, axiosService: AxiosService) {
     this.axiosService = axiosService;
@@ -52,9 +53,7 @@ export class GuildsListComponent {
     this.axiosService.get(options)
       .then((res: any) => {
         this.currentChannel = res;
-        console.log(res === undefined);
-        console.log(res === "");
-        console.log(this.currentChannel);
+        this.gotCurrentChannel = true;
       })
       .catch((err) => {
         console.log(err);
@@ -72,7 +71,7 @@ export class GuildsListComponent {
     this.socketService.joinChannel(id);
     this.currentChannel = this.getChannelById(id);
   }
-  
+
   leaveChannel() {
     this.socketService.leaveChannel();
     this.currentChannel = null;
