@@ -1,6 +1,9 @@
 const serverManager = require('./server')
 const channelManager = require('./discord/channel-manager');
 const soundManager = require('./discord/sound-manager');
+
+require('./discord/event-manager');
+
 const io = require("socket.io")(serverManager.server, {
     cors: {
         origin: "*",
@@ -31,5 +34,7 @@ io.on('connection', (socket) => {
         console.log('a user disconnected');
     });
 });
+
+
 
 exports.io = io;
