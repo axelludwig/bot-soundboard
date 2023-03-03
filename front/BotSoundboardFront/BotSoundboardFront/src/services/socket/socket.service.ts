@@ -14,29 +14,21 @@ export class SocketService {
 	constructor(private socket: Socket) {
 		this.socket.on('connect', () => {
 			this.onConnect();
-
 		})
 
 		this.socket.on('disconnect', () => {
 			this.onDisconnect();
 		})
 
-		this.socket.on('getChannelsInfosResult', (res: any) => {
-			console.log(res);
-		})
+		// this.socket.on('getChannelsInfosResult', (res: any) => {
+		// 	console.log(res);
+		// })
 
 	}
 
-	// emit event
 	test() {
 		this.socket.emit('test');
 	}
-
-
-
-	// getChannelsInfos() {
-	// 	this.socket.emit('getChannelsInfos', { 'salkut': "guy" });
-	// }
 
 	onRestest() {
 		return this.socket.fromEvent('restest');
@@ -56,5 +48,9 @@ export class SocketService {
 
 	leaveChannel() {
 		this.socket.emit("leaveChannel");
+	}
+
+	playSound(sound: string) {
+		this.socket.emit(sound);
 	}
 }

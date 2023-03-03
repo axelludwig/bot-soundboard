@@ -30,7 +30,7 @@ export class AxiosService {
     this.errorHandler = errorHandler;
 
     this.axiosClient = axios.create({
-      timeout: 3000,
+      timeout: 10000,
       headers: {
         "X-Initialized-At": Date.now().toString()
       }

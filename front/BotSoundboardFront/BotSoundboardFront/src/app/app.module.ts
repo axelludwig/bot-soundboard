@@ -11,14 +11,15 @@ import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GuildsListComponent } from './guilds-list/guilds-list.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-
+import { SoundboardMenuComponent } from './soundboard-menu/soundboard-menu.component';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
   declarations: [
     AppComponent,
-    GuildsListComponent
+    GuildsListComponent,
+    SoundboardMenuComponent
   ],
   imports: [CommonModule, MatProgressSpinnerModule,
     BrowserModule, SocketIoModule.forRoot(config), MatSlideToggleModule, MatCheckboxModule, MatButtonModule, BrowserAnimationsModule, MatInputModule

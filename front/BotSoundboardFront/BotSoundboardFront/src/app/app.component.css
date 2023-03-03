@@ -1,4 +1,10 @@
-.main {}
+:host{
+    display: block;
+}
+
+.test{
+    display: flex;
+}
 
 .filter-green {
     margin-top: 2vh;
