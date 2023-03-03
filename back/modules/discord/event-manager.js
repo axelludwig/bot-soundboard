@@ -12,8 +12,5 @@ function onUserChangeChannel(interaction){
         //Le bot a changé de channel
         console.log('send bot change channel : ' + interaction.channelId);
         socket.io.emit('botChangeChannel', interaction.channelId);
-        return interaction.channelId;
     }
-
-    return undefined;
 }
