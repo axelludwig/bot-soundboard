@@ -19,6 +19,8 @@ export class AppComponent {
   public filesToUpload: Iterable<File> = [];
   public hasFiles: boolean = false;
 
+  public newSound: string | null = null;
+
   constructor(socketService: SocketService, axiosService: AxiosService) {
 
     this.axiosService = axiosService;
@@ -53,7 +55,7 @@ export class AppComponent {
 
   uploadFile() {
     var options: GetOptions = { url: "/sounds" }
-    
+
     Array.from(this.filesToUpload).forEach(file => {
       var filereader = new FileReader();
       filereader.readAsDataURL(file);
@@ -65,6 +67,7 @@ export class AppComponent {
           "type": file.type
         }
         options.params = params;
+        this.newSound = file.name.replace(/\.[^/.]+$/, "");
         this.axiosService.post(options).then((res) => {
           console.log(res);
           this.hasFiles = false;

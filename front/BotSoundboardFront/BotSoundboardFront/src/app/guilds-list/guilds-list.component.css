@@ -20,3 +20,8 @@
 .selected-channel {
     color: green;
 }
+
+.members{
+    color: black;
+    padding-left: 2vw;
+}
