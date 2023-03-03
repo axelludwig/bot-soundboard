@@ -18,7 +18,7 @@ io.on('connection', (socket) => {
     })
 
     socket.on('joinChannel', (data) => {
-        console.log(data);
+        console.log('User asked bot to join channel ' + data);
         channelManager.joinChannel(data);
     });
 

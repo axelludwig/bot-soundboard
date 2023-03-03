@@ -1,16 +1,19 @@
 const socket = require('../socket');
 const discordConfig = require("../../discord-config.json");
 const discordClient = require('./discord-client');
-const { Events} = require("discord.js");
+const channelManager = require('./channel-manager');
+const { Events } = require("discord.js");
 
-discordClient.client.on(Events.VoiceStateUpdate, async interaction => {
-    onUserChangeChannel(interaction);
+discordClient.client.on(Events.VoiceStateUpdate, async voiceState => {
+    onUserChangeChannel(voiceState);
 });
 
-function onUserChangeChannel(interaction){
-    if (interaction.guild.id == discordConfig.guildId && interaction.id == discordConfig.clientId){
+function onUserChangeChannel(voiceState) {
+    if (voiceState.guild.id == discordConfig.guildId && voiceState.id == discordConfig.clientId) {
         //Le bot a changé de channel
-        console.log('send bot change channel : ' + interaction.channelId);
-        socket.io.emit('botChangeChannel', interaction.channelId);
+        channelManager.exportCurrentChannel().then((value) => {
+            console.log('send bot change channel : ' + value.id);
+            socket.io.emit('botChangeChannel', value.id);
+        });
     }
 }

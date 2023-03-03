@@ -3,10 +3,20 @@ const { joinVoiceChannel } = require('@discordjs/voice');
 const discordConfig = require("../../discord-config.json");
 
 const storedConnections = {};
+let cachedChannels = undefined;
 
 module.exports.getChannels = async function () {
     let myGuild = await guildManager.getCurrentGuild();
-    let channels = await myGuild.channels.fetch();
+    let channels = undefined;
+    if (!cachedChannels) {
+        channels = await myGuild.channels.fetch();
+        cachedChannels = channels;
+    }
+    else {
+        console.log("Channels found in cache");
+        channels = cachedChannels;
+    }
+
     let filteredChannels = [];
 
     channels.forEach((value, key) => {
