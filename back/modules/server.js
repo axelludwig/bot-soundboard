@@ -32,7 +32,7 @@ app.get('/currentChannel', (req, res) => {
     }));
 });
 
-app.get('/getSounds', (req, res) => {
+app.get('/sounds', (req, res) => {
     res.send(JSON.stringify(soundManager.exportSounds()));
 });
 
