@@ -51,6 +51,6 @@ export class SocketService {
 	}
 
 	playSound(sound: string) {
-		this.socket.emit(sound);
+		this.socket.emit("playSound", sound);
 	}
 }
