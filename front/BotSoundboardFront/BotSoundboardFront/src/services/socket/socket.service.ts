@@ -6,10 +6,14 @@ import { Observable, Subject } from 'rxjs';
 	providedIn: 'root'
 })
 export class SocketService {
+
 	private _connect = new Subject<boolean>();
 	connect$ = this._connect.asObservable();
 	private _disconnect = new Subject<boolean>();
 	disconnect$ = this._disconnect.asObservable();
+
+	private _botChangeChannel = new Subject<string>();
+	botChangeChannel$ = this._botChangeChannel.asObservable();
 
 	constructor(private socket: Socket) {
 		this.socket.on('connect', () => {
@@ -18,6 +22,11 @@ export class SocketService {
 
 		this.socket.on('disconnect', () => {
 			this.onDisconnect();
+		})
+
+		this.socket.on('botChangeChannel', (id: string) => {
+			console.log("ici");			
+			this.onBotChangeChannel(id)
 		})
 
 		// this.socket.on('getChannelsInfosResult', (res: any) => {
@@ -52,5 +61,9 @@ export class SocketService {
 
 	playSound(sound: string) {
 		this.socket.emit("playSound", sound);
+	}
+
+	onBotChangeChannel(id: string) {
+		this._botChangeChannel.next(id);
 	}
 }

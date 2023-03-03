@@ -4,7 +4,7 @@
     <div *ngFor="let channel of channels" class="channels">
         <div [class.selected-channel]="currentChannel !== null && channel.id === currentChannel.id"
             (click)="channelClick(channel.id)" class="channel">
-            <h4> {{channel.name}}{{channel.id}}</h4>
+            <h4> {{channel.name}} </h4>
         </div>
     </div>
 </ng-template>

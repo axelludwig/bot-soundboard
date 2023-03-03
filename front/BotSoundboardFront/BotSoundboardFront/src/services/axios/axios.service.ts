@@ -67,9 +67,7 @@ export class AxiosService {
   // Errors can occur for a variety of reasons. I normalize the error response so that
   // the calling context can assume a standard error structure.
   private normalizeError(error: any): ErrorResponse {
-
     this.errorHandler.handleError(error);
-
     // NOTE: Since I'm not really dealing with a production API, this doesn't really
     // normalize anything (ie, this is not the focus of this demo).
     return ({

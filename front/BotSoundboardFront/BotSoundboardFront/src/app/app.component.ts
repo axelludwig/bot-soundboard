@@ -24,7 +24,7 @@ export class AppComponent {
     this.axiosService = axiosService;
     this.socketService = socketService;
 
-    this.socketService.onRestest().subscribe(() => { })
+    // this.socketService.onRestest().subscribe(() => { })
 
     this.socketService.connect$.subscribe(() => {
       this.socketConnection = true;

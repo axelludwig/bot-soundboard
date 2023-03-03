@@ -17,7 +17,7 @@ export class SoundboardMenuComponent {
   constructor(socketService: SocketService, axiosService: AxiosService) {
     this.axiosService = axiosService;
     this.socketService = socketService;
-    this.getSounds();
+    this.getSounds();    
   }
 
   getSounds() {
