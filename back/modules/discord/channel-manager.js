@@ -1,12 +1,11 @@
 const guildManager = require("./guild-manager");
 const { joinVoiceChannel } = require('@discordjs/voice');
 const discordConfig = require("../../discord-config.json");
-const membersManager = require("./member-manager");
 
 const storedConnections = {};
 let cachedChannels = undefined;
 
-module.exports.getChannels = async function () {
+exports.getChannels = async function () {
     let myGuild = await guildManager.getCurrentGuild();
     let channels = undefined;
     if (!cachedChannels) {
@@ -28,7 +27,7 @@ module.exports.getChannels = async function () {
 
     return filteredChannels.sort(sortChannels);
 }
-module.exports.exportChannels = async function () {
+exports.exportChannels = async function () {
     let channels = await exports.getChannels();
 
     let result = [];
@@ -40,7 +39,7 @@ module.exports.exportChannels = async function () {
     return result;
 }
 
-module.exports.getUserChannel = async function(userId){
+exports.getUserChannel = async function(userId){
     let channels = await exports.getChannels();
 
     let results = channels.filter(channel =>
@@ -56,10 +55,10 @@ module.exports.getUserChannel = async function(userId){
     return undefined;
 }
 
-module.exports.getCurrentChannel = async function () {
+exports.getCurrentChannel = async function () {
     return await module.exports.getUserChannel(discordConfig.clientId);
 }
-module.exports.exportCurrentChannel = async function () {
+exports.exportCurrentChannel = async function () {
     let currentChannel = await exports.getCurrentChannel();
     if (!currentChannel) {
         return undefined;
@@ -67,7 +66,7 @@ module.exports.exportCurrentChannel = async function () {
 
     return exportChannel(currentChannel);
 }
-module.exports.joinChannel = async function (channelId) {
+exports.joinChannel = async function (channelId) {
     let myGuild = await guildManager.getCurrentGuild();
 
     const voiceConnection = joinVoiceChannel({
@@ -80,7 +79,7 @@ module.exports.joinChannel = async function (channelId) {
 
     return voiceConnection;
 }
-module.exports.leaveChannel = async function () {
+exports.leaveChannel = async function () {
     let myGuild = await guildManager.getCurrentGuild();
     let connection = storedConnections[myGuild.id];
     if (connection) {
