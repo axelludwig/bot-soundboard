@@ -45,7 +45,7 @@ module.exports.getCurrentChannel = async function () {
     return undefined;
 }
 module.exports.exportCurrentChannel = async function () {
-    let currentChannel = exports.getCurrentChannel();
+    let currentChannel = await exports.getCurrentChannel();
     if (!currentChannel) {
         return undefined;
     }

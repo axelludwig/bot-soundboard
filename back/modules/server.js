@@ -21,13 +21,13 @@ app.get('/', (req, res) => {
 });
 
 app.get('/channels', (req, res) => {
-    channelManager.getChannels().then((channels => {
+    channelManager.exportChannels().then((channels => {
         res.send(JSON.stringify(channels))
     }));
 });
 
 app.get('/currentChannel', (req, res) => {
-    channelManager.getCurrentChannel().then((channel => {
+    channelManager.exportCurrentChannel().then((channel => {
         res.send(JSON.stringify(channel))
     }));
 });
