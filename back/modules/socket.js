@@ -1,11 +1,8 @@
 const serverManager = require('./server')
 const channelManager = require('./discord/channel-manager');
 const soundManager = require('./discord/sound-manager');
-const discordClient = require('./discord/discord-client');
 
-const eventManager = require('./discord/event-manager');
-
-const { Events} = require("discord.js");
+require('./discord/event-manager');
 
 const io = require("socket.io")(serverManager.server, {
     cors: {
@@ -38,8 +35,6 @@ io.on('connection', (socket) => {
     });
 });
 
-discordClient.client.on(Events.VoiceStateUpdate, async interaction => {
-    eventManager.onUserChangeChannel(interaction);
-});
+
 
 exports.io = io;
