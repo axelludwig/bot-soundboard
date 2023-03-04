@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 let soundVolume = 1; // entre 0 et 1
-let mode = "queue" //overwrite or queue
+let mode = "overwrite" //overwrite or queue
 let queue = [];
 let isSoundPlaying = false;
 
