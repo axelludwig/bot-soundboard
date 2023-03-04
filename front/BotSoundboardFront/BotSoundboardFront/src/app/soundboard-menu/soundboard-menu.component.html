@@ -1,7 +1,7 @@
 <div *ngIf="sounds.length > 0" class="wrapper">
     <div class="grid">
-        <span class="sound" *ngFor="let sound of sounds ">
-            <span (click)="soundClicked(sound)"> {{sound}} </span>
+        <span (click)="soundClicked(sound)" class="sound" *ngFor="let sound of sounds ">
+            <span> {{sound}} </span>
         </span>
     </div>
 </div>
