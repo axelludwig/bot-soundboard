@@ -1,4 +1,4 @@
-const { createAudioPlayer, createAudioResource, AudioPlayerStatus } = require('@discordjs/voice');
+const { createAudioPlayer, createAudioResource, AudioPlayerStatus, NoSubscriberBehavior  } = require('@discordjs/voice');
 const channelManager = require('./channel-manager');
 const fs = require('fs');
 const path = require('path');
@@ -54,7 +54,11 @@ exports.setMode = function(newMode){
 }
 
 startSound = function (soundName, voiceConnection) {
-    const player = createAudioPlayer();
+    const player = createAudioPlayer({
+        behaviors: {
+            noSubscriber: NoSubscriberBehavior.Pause,
+        },
+    });
 
     let audioPath = './sounds/' + soundName + '.mp3';
     console.log("playing " + audioPath);
