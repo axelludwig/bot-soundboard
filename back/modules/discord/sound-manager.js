@@ -3,6 +3,11 @@ const channelManager = require('./channel-manager');
 const fs = require('fs');
 const path = require('path');
 
+let soundVolume = 1; // entre 0 et 1
+let mode = "queue" //overwrite or queue
+let queue = [];
+let isSoundPlaying = false;
+
 exports.playSound = async function (soundName) {
     let channel = await channelManager.getCurrentChannel();
 
@@ -14,23 +19,19 @@ exports.playSound = async function (soundName) {
 
     let voiceConnection = await channelManager.joinChannel(channel.id);
 
-    const player = createAudioPlayer();
+    if (mode === "queue") {
+        queue.push(soundName);
+        if (!isSoundPlaying){
+            startSound(soundName, voiceConnection);
+        }
+    }
+    else{
+        startSound(soundName, voiceConnection);
+    }
+}
 
-    let audioPath = './sounds/' + soundName + '.mp3';
-    console.log("playing " + audioPath);
-    const resource = createAudioResource(audioPath);
-
-    player.play(resource);
-
-    player.on(AudioPlayerStatus.Playing, () => {
-        console.log('Playing');
-    });
-
-    player.on('error', error => {
-        console.error(`Error: ${error.message} with resource`);
-    });
-
-    voiceConnection.subscribe(player);
+exports.setVolume = function (newVolume) {
+    soundVolume = newVolume;
 }
 
 exports.exportSounds = function () {
@@ -41,4 +42,42 @@ exports.exportSounds = function () {
         });
 
     return result;
+}
+
+exports.setMode = function(newMode){
+    if (newMode === "queue" || newMode === "overwrite"){
+        mode = newMode;
+    }
+    else{
+        //TOTO erreur mode non reconnu
+    }
+}
+
+startSound = function (soundName, voiceConnection) {
+    const player = createAudioPlayer();
+
+    let audioPath = './sounds/' + soundName + '.mp3';
+    console.log("playing " + audioPath);
+    const resource = createAudioResource(audioPath, { inlineVolume: true });
+    resource.volume.setVolume(soundVolume);
+
+    player.play(resource);
+    isSoundPlaying = true;
+
+    player.on('error', error => {
+        console.error(`Error: ${error.message} with resource`);
+    });
+
+    voiceConnection.subscribe(player);
+
+    if (mode === "queue") {
+        player.on(AudioPlayerStatus.Idle, () => {
+            //Quand le bot a fini un son
+            isSoundPlaying = false;
+            queue.shift();
+            if (queue[0]){
+                startSound(queue[0], voiceConnection);
+            }
+        });
+    }
 }

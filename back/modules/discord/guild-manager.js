@@ -12,7 +12,6 @@ exports.getCurrentGuild = async function () {
         return myGuild;
     }
     else{
-        console.log("Guild found in cache");
         return cachedGuild;
     }
 }

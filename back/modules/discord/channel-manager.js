@@ -13,7 +13,6 @@ exports.getChannels = async function () {
         cachedChannels = channels;
     }
     else {
-        console.log("Channels found in cache");
         channels = cachedChannels;
     }
 

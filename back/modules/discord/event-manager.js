@@ -12,10 +12,14 @@ discordClient.client.on(Events.VoiceStateUpdate, async voiceState => {
 async function onUserChangeChannel(voiceState) {
     if (voiceState.guild.id == discordConfig.guildId) {
         let channel = await channelManager.getUserChannel(voiceState.id);
+        if (!channel){
+            return;
+        }
         
         let userChannelInfos = {};
         userChannelInfos.userId = voiceState.id;
         userChannelInfos.channelId = channel.id;
+
         let userInfos = await userManager.getUserById(voiceState.id);
         userChannelInfos.name = userInfos.user.username;
 

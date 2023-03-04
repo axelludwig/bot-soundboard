@@ -30,6 +30,16 @@ io.on('connection', (socket) => {
         soundManager.playSound(data);
     })
 
+    socket.on('setVolume', (data) => {
+        soundManager.setVolume(data);
+        io.emit('botChangeVolume', data);
+    });
+
+    socket.on('setMode', (data) => {
+        soundManager.setMode(data);
+        io.emit('botChangeMode', data);
+    });
+
     socket.on('disconnect', (socket) => {
         console.log('a user disconnected');
     });
