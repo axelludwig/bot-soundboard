@@ -41,8 +41,6 @@ export class GuildsListComponent {
     })
 
     this.socketService.userChangeChannel$.subscribe((res: any) => {
-      console.log("iici");
-      
       var member: Member = {
         id: res.userId,
         name: res.name
@@ -51,19 +49,13 @@ export class GuildsListComponent {
 
       this.channels.forEach((c) => {
         c.members = c.members.filter((m) => {
-          m.id !== member.id;
+          return m.id !== member.id
         })
-
-        // c.members.map((m) => {
-
-        //   if (m == member) {
-        //     c.members
-        //   }
-        // })
-        // if (c.id == channelId) {
-        //   c.members.push(member);
-        // }
+        if (c.id == channelId) {
+          c.members.push(member);
+        }
       })
+
     })
   }
 
@@ -106,7 +98,6 @@ export class GuildsListComponent {
 
   channelClick(id: string) {
     this.socketService.joinChannel(id);
-    this.currentChannel = this.getChannelById(id);
   }
 
   leaveChannel() {

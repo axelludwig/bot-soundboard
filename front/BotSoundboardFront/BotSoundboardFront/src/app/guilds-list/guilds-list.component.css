@@ -8,7 +8,8 @@
 
 .channel {
     color: black;
-    display: inline-block
+    display: inline-block;
+    user-select: none;
 }
 
 .channel:hover {
@@ -21,7 +22,8 @@
     color: green;
 }
 
-.members{
+.members {
     color: black;
     padding-left: 2vw;
+    user-select: none;
 }

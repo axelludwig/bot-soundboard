@@ -28,13 +28,10 @@ export class SocketService {
 		})
 
 		this.socket.on('botChangeChannel', (id: string) => {
-			console.log('botChangeChannel');
-			
 			this.onBotChangeChannel(id);
 		})
 
-		this.socket.on('userChangeChannel ', ( res: any) => {
-			console.log("ici");			
+		this.socket.on('userChangeChannel', (res: any) => {
 			this.onUserChangeChannel(res);
 		})
 
