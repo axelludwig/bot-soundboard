@@ -28,12 +28,12 @@ async function onUserChangeChannel(voiceState) {
 
         if (voiceState.id == discordConfig.clientId) {
             //Le bot a changé de channel
-            let botCurrentChannel = channelManager.exportCurrentChannel();
+            let botCurrentChannel = await channelManager.exportCurrentChannel();
             if (!botCurrentChannel) {
                 return;
             }
 
-            console.log('send bot change channel : ' + botCurrentChannel.id);
+            console.log('send bot change channel : ' + botCurrentChannel.name);
             socket.io.emit('botChangeChannel', botCurrentChannel.id);
         }
     }

@@ -2,6 +2,7 @@ const { createAudioPlayer, createAudioResource, AudioPlayerStatus, NoSubscriberB
 const channelManager = require('./channel-manager');
 const fs = require('fs');
 const path = require('path');
+const soundPath = path.join(__dirname, '../../sounds');
 
 let soundVolume = 1; // entre 0 et 1
 let mode = "overwrite" //overwrite or queue
@@ -36,7 +37,7 @@ exports.setVolume = function (newVolume) {
 
 exports.exportSounds = function () {
     let result = [];
-    fs.readdirSync(path.join(__dirname, '../../sounds'))
+    fs.readdirSync(soundPath)
         .forEach(file => {
             result.push(path.parse(file).name);
         });
@@ -51,6 +52,16 @@ exports.setMode = function(newMode){
     else{
         //TOTO erreur mode non reconnu
     }
+}
+
+exports.renameSound = function (name, newName){
+    if (!exports.exportSounds().includes(name)){
+        console.log("Sound " + name + "not found"); 
+        return;
+    }
+    let filePath = path.join(soundPath, newName + ".mp3");
+    let newPath = path.join(soundPath, newName + ".mp3");
+    fs.renameSync(filePath, newPath);
 }
 
 startSound = function (soundName, voiceConnection) {
