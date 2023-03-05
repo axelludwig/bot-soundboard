@@ -39,6 +39,32 @@ export class GuildsListComponent {
     this.socketService.botChangeChannel$.subscribe((id: string) => {
       this.currentChannel = this.getChannelById(id);
     })
+
+    this.socketService.userChangeChannel$.subscribe((res: any) => {
+      console.log("iici");
+      
+      var member: Member = {
+        id: res.userId,
+        name: res.name
+      };
+      var channelId = res.channelId;
+
+      this.channels.forEach((c) => {
+        c.members = c.members.filter((m) => {
+          m.id !== member.id;
+        })
+
+        // c.members.map((m) => {
+
+        //   if (m == member) {
+        //     c.members
+        //   }
+        // })
+        // if (c.id == channelId) {
+        //   c.members.push(member);
+        // }
+      })
+    })
   }
 
   getChannels() {
@@ -49,7 +75,7 @@ export class GuildsListComponent {
       .then((res: any) => {
         res.map((c: Channel) => {
           this.channels.push(c)
-          console.log(c.members);          
+          console.log(c.members);
         })
       })
       .catch((err) => {

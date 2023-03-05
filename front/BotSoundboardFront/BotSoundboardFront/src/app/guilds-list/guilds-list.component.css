@@ -12,8 +12,8 @@
 }
 
 .channel:hover {
-    color: white;
-    background-color: black;
+    color: green;
+    background-color: gray;
     cursor: pointer;
 }
 
