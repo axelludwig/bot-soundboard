@@ -57,6 +57,14 @@ export class GuildsListComponent {
       })
 
     })
+
+    this.socketService.userDisconnectsChannel$.subscribe((id: string) => {
+      this.channels.forEach((c) => {
+        c.members = c.members.filter((m) => {
+          return m.id !== id
+        })
+      })
+    })
   }
 
   getChannels() {

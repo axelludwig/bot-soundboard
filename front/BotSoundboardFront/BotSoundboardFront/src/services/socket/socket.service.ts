@@ -16,6 +16,8 @@ export class SocketService {
 	botChangeChannel$ = this._botChangeChannel.asObservable();
 	private _userChangeChannel = new Subject<object>();
 	userChangeChannel$ = this._userChangeChannel.asObservable();
+	private _userDisconnectsChannel = new Subject<string>();
+	userDisconnectsChannel$ = this._userDisconnectsChannel.asObservable();
 
 
 	constructor(private socket: Socket) {
@@ -33,6 +35,10 @@ export class SocketService {
 
 		this.socket.on('userChangeChannel', (res: any) => {
 			this.onUserChangeChannel(res);
+		})
+
+		this.socket.on('userDisconnect', (res: string) => {
+			this.onUserDisconnect(res);
 		})
 
 		// this.socket.on('getChannelsInfosResult', (res: any) => {
@@ -75,5 +81,9 @@ export class SocketService {
 
 	onUserChangeChannel(res: object) {
 		this._userChangeChannel.next(res);
+	}
+
+	onUserDisconnect(id: string){
+		this._userDisconnectsChannel.next(id);
 	}
 }

@@ -13,6 +13,7 @@ async function onUserChangeChannel(voiceState) {
     if (voiceState.guild.id == discordConfig.guildId) {
         let channel = await channelManager.getUserChannel(voiceState.id);
         if (!channel){
+            //No channel found, this means that user disconnected
             socket.io.emit('userDisconnect', voiceState.id);
             if (voiceState.id == discordConfig.clientId) {
                 socket.io.emit('botDisconnect', undefined);
