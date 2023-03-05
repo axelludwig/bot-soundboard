@@ -10,7 +10,6 @@ discordClient.client.on(Events.VoiceStateUpdate, async voiceState => {
 });
 
 async function onUserChangeChannel(voiceState) {
-    console.log(voiceState);
     if (voiceState.guild.id == discordConfig.guildId) {
         let channel = await channelManager.getUserChannel(voiceState.id);
         if (!channel){
