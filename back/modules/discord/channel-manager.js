@@ -1,8 +1,7 @@
 const guildManager = require("./guild-manager");
-const { joinVoiceChannel } = require('@discordjs/voice');
+const { joinVoiceChannel, getVoiceConnection } = require('@discordjs/voice');
 const discordConfig = require("../../discord-config.json");
 
-const storedConnections = {};
 let cachedChannels = undefined;
 
 exports.getChannels = async function () {
@@ -38,7 +37,7 @@ exports.exportChannels = async function () {
     return result;
 }
 
-exports.getUserChannel = async function(userId){
+exports.getUserChannel = async function (userId) {
     let channels = await exports.getChannels();
 
     let results = channels.filter(channel =>
@@ -74,16 +73,17 @@ exports.joinChannel = async function (channelId) {
         adapterCreator: myGuild.voiceAdapterCreator
     });
 
-    storedConnections[myGuild.id] = voiceConnection;
-
     return voiceConnection;
 }
 exports.leaveChannel = async function () {
     let myGuild = await guildManager.getCurrentGuild();
-    let connection = storedConnections[myGuild.id];
-    if (connection) {
-        connection.destroy();
-        storedConnections[myGuild.id] = undefined;
+    let currentConnection = getVoiceConnection(myGuild.id);
+    if (currentConnection) {
+        currentConnection.destroy();
+        console.log("Bot leaved channel");
+    }
+    else{
+        console.log("Bot is not inside a channel");
     }
 }
 
