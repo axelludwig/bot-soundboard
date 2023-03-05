@@ -36,7 +36,6 @@ export class SoundboardMenuComponent {
       .then((res: any) => {
         this.sounds = res;
         console.log(this.sounds);
-
       })
       .catch((err) => {
         console.log(err);

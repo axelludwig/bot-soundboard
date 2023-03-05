@@ -22,7 +22,8 @@
     padding: 20px;
     font-size: 30px;
     text-align: center;
-    word-break: break-all;
+    word-break: break-all;  
+    user-select: none  
 }
 
 .sound:hover {
