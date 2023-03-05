@@ -44,18 +44,15 @@ export class GuildsListComponent {
       var member: Member = {
         id: res.userId,
         name: res.name
-      };
-      var channelId = res.channelId;
+      }; var channelId = res.channelId;
 
       this.channels.forEach((c) => {
         c.members = c.members.filter((m) => {
           return m.id !== member.id
-        })
-        if (c.id == channelId) {
+        }); if (c.id == channelId) {
           c.members.push(member);
         }
       })
-
     })
 
     this.socketService.userDisconnectsChannel$.subscribe((id: string) => {
@@ -64,6 +61,10 @@ export class GuildsListComponent {
           return m.id !== id
         })
       })
+    })
+
+    this.socketService.botDisconnect$.subscribe((res: object) => {
+      this.currentChannel = null;
     })
   }
 
@@ -113,4 +114,3 @@ export class GuildsListComponent {
     this.currentChannel = null;
   }
 }
-

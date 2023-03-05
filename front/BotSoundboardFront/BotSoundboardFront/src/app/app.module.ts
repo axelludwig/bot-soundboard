@@ -8,6 +8,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { CommonModule } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
+import { MatSliderModule } from '@angular/material/slider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GuildsListComponent } from './guilds-list/guilds-list.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -21,7 +22,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     GuildsListComponent,
     SoundboardMenuComponent
   ],
-  imports: [CommonModule, MatProgressSpinnerModule,
+  imports: [CommonModule, MatProgressSpinnerModule, MatSliderModule,
     BrowserModule, SocketIoModule.forRoot(config), MatSlideToggleModule, MatCheckboxModule, MatButtonModule, BrowserAnimationsModule, MatInputModule
   ],
   exports: [],
