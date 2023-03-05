@@ -20,26 +20,26 @@ async function onUserChangeChannel(voiceState) {
             }
             return;
         }
+
+        if (voiceState.channelId === channel.id){
+            //Pas de changement de channel
+            return;
+        }
+
         
         let userChannelInfos = {};
         userChannelInfos.userId = voiceState.id;
         userChannelInfos.channelId = channel.id;
-
         let userInfos = await userManager.getUserById(voiceState.id);
+        
         userChannelInfos.name = userInfos.user.username;
 
         console.log('send user changed channel : ' + userChannelInfos.userId);
         socket.io.emit('userChangeChannel', userChannelInfos);
 
         if (voiceState.id == discordConfig.clientId) {
-            //Le bot a changé de channel
-            let botCurrentChannel = await channelManager.exportCurrentChannel();
-            if (!botCurrentChannel) {
-                return;
-            }
-
-            console.log('send bot change channel : ' + botCurrentChannel.name);
-            socket.io.emit('botChangeChannel', botCurrentChannel.id);
+            console.log('send bot change channel : ' + channel.name);
+            socket.io.emit('botChangeChannel', channel.id);
         }
     }
 }
