@@ -37,7 +37,7 @@ app.get('/sounds', (req, res) => {
     res.send(JSON.stringify(soundManager.exportSounds()));
 });
 
-app.get('/getVolume', (req, res) => {
+app.get('/volume', (req, res) => {
     res.send(JSON.stringify(soundManager.getVolume()));
 });
 
