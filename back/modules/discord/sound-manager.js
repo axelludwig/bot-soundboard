@@ -67,10 +67,18 @@ exports.renameSound = function (name, newName){
 }
 
 exports.pauseSound = function(){
+    if (!globalPlayer){
+        return;
+    }
+    console.log("Pausing sound");
     globalPlayer.pause();
 }
 
 exports.unpauseSound = function(){
+    if (!globalPlayer){
+        return;
+    }
+    console.log("Unpause sound");
     globalPlayer.unpause();
 }
 
@@ -90,6 +98,7 @@ startSound = function (soundName, voiceConnection) {
 
     globalPlayer.on('error', error => {
         console.error(`Error: ${error.message} with resource`);
+        globalPlayer = undefined;
     });
 
     voiceConnection.subscribe(globalPlayer);
@@ -97,6 +106,7 @@ startSound = function (soundName, voiceConnection) {
     if (mode === "queue") {
         globalPlayer.on(AudioPlayerStatus.Idle, () => {
             //Quand le bot a fini un son
+            globalPlayer = undefined;
             isSoundPlaying = false;
             queue.shift();
             if (queue[0]){

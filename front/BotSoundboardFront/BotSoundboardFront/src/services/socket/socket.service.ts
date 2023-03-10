@@ -75,6 +75,14 @@ export class SocketService {
 		this.socket.emit("playSound", sound);
 	}
 
+	pauseSound(){
+		this.socket.emit("pauseSound");
+	}
+
+	unpauseSound(){
+		this.socket.emit("unpauseSound");
+	}
+
 	onBotChangeChannel(id: string) {
 		this._botChangeChannel.next(id);
 	}
