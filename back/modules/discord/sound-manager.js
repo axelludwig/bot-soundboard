@@ -35,6 +35,7 @@ exports.playSound = async function (soundName) {
 
 exports.setVolume = function (newVolume) {
     soundVolume = newVolume;
+    console.log("Volume set to " + soundVolume);
 }
 
 exports.exportSounds = function () {
@@ -93,7 +94,6 @@ startSound = function (soundName, voiceConnection) {
     }
 
     let audioPath = './sounds/' + soundName + '.mp3';
-    console.log("playing " + audioPath);
     const resource = createAudioResource(audioPath, { inlineVolume: true });
     resource.volume.setVolume(soundVolume);
 
@@ -105,6 +105,7 @@ startSound = function (soundName, voiceConnection) {
         globalPlayer = undefined;
     });
 
+    console.log("playing " + soundName);
     voiceConnection.subscribe(globalPlayer);
 
     if (mode === "queue") {
