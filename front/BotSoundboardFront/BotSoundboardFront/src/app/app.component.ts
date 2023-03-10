@@ -121,5 +121,11 @@ export class AppComponent {
       })
   }
 
+  unpauseSound(){
+    this.socketService.unpauseSound();
+  }
 
+  pauseSound(){
+    this.socketService.pauseSound();
+  }
 }

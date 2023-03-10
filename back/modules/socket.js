@@ -28,6 +28,14 @@ io.on('connection', (socket) => {
 
     socket.on('playSound', (data) => {
         soundManager.playSound(data);
+    });
+
+    socket.on('pauseSound', (data) => {
+        soundManager.pauseSound();
+    })
+
+    socket.on('unpauseSound', (data) => {
+        soundManager.unpauseSound();
     })
 
     socket.on('setVolume', (data) => {

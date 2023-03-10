@@ -89,6 +89,13 @@ export class SocketService {
 	}
 
 	// ඞ listenin ඞ \\
+	pauseSound(){
+		this.socket.emit("pauseSound");
+	}
+
+	unpauseSound(){
+		this.socket.emit("unpauseSound");
+	}
 
 	onBotChangeChannel(id: string) {
 		this._botChangeChannel.next(id);

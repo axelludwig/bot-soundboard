@@ -17,8 +17,17 @@
     <br>
     <mat-slide-toggle>Slide me!</mat-slide-toggle>
 
+    <button mat-fab color="primary" (click)="unpauseSound()">
+        <mat-icon>play_arrow</mat-icon>
+      </button>
+    <button mat-fab color="primary" (click)="pauseSound()">
+        <mat-icon>pause</mat-icon>
+      </button>
+
     <div class="test">
         <app-guilds-list />
         <app-soundboard-menu [newSound]="newSound" />
     </div>
+
+    
 </div>
