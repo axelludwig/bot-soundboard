@@ -36,6 +36,9 @@ exports.playSound = async function (soundName) {
 
 exports.setVolume = function (newVolume) {
     soundVolume = newVolume;
+    if (globalResource){
+        globalResource.volume.setVolume(soundVolume);
+    }
     console.log("Volume set to " + soundVolume);
 }
 
@@ -98,16 +101,15 @@ startSound = function (soundName, voiceConnection) {
         globalPlayer = createMyAudioPlayer();
     }
 
-    let audioPath = './sounds/' + soundName + '.mp3';
-    const resource = createAudioResource(audioPath, { inlineVolume: true });
-    resource.volume.setVolume(soundVolume);
+    globalResource = createMyAudioResource(soundName);
 
-    globalPlayer.play(resource);
+    globalPlayer.play(globalResource);
     isSoundPlaying = true;
 
     globalPlayer.on('error', error => {
         console.error(`Error: ${error.message} with resource`);
         globalPlayer = undefined;
+        globalResource = undefined;
     });
 
     console.log("playing " + soundName);
@@ -117,6 +119,7 @@ startSound = function (soundName, voiceConnection) {
         globalPlayer.on(AudioPlayerStatus.Idle, () => {
             //Quand le bot a fini un son
             globalPlayer = undefined;
+            globalResource = undefined;
             isSoundPlaying = false;
             queue.shift();
             if (queue[0]){
@@ -134,4 +137,12 @@ function createMyAudioPlayer(){
     });
 
     return player;
+}
+
+function createMyAudioResource(soundName){
+    let audioPath = './sounds/' + soundName + '.mp3';
+    let resource = createAudioResource(audioPath, { inlineVolume: true });
+    resource.volume.setVolume(soundVolume);
+
+    return resource;
 }
