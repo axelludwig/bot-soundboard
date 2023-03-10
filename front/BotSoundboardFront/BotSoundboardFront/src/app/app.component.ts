@@ -20,13 +20,11 @@ export class AppComponent {
   public hasFiles: boolean = false;
 
   public newSound: string | null = null;
+  public volume: number | null = null;
 
   constructor(socketService: SocketService, axiosService: AxiosService) {
-
     this.axiosService = axiosService;
     this.socketService = socketService;
-
-    // this.socketService.onRestest().subscribe(() => { })
 
     this.socketService.connect$.subscribe(() => {
       this.socketConnection = true;
@@ -37,6 +35,19 @@ export class AppComponent {
       this.socketConnection = false;
       console.log('déconnexion :( pas super géniale');
     })
+
+    this.socketService.botChangeVolume$.subscribe((value: number) => {
+      console.log(value);
+      this.volume = value;
+    })
+  }
+
+  ngOnInit() {
+    this.getVolume();
+  }
+
+  onSliderChange(event: any) {
+    this.socketService.setVolume(event.value)
   }
 
   onFileSelect(event: any) {
@@ -78,6 +89,20 @@ export class AppComponent {
           })
       }
     })
+  }
+
+  getVolume() {
+    var options: GetOptions = {
+      url: "/volume"
+    }
+    this.axiosService.get(options)
+      .then((res: any) => {
+        console.log(res);
+        this.volume = res
+      })
+      .catch((err) => {
+        console.log(err);
+      })
   }
 
   test() {

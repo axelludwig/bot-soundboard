@@ -21,6 +21,9 @@ export class SocketService {
 	private _botDisconnect = new Subject<object>();
 	botDisconnect$ = this._botDisconnect.asObservable();
 
+	private _botChangeVolume = new Subject<number>();
+	botChangeVolume$ = this._botChangeVolume.asObservable();
+
 	constructor(private socket: Socket) {
 		this.socket.on('connect', () => {
 			this.onConnect();
@@ -45,7 +48,13 @@ export class SocketService {
 		this.socket.on('botDisconnect', (res: any) => {
 			this.onBotDisconnect(res)
 		})
+
+		this.socket.on('botChangeVolume', (data: number) => {
+			this.onBotChangeVolume(data);
+		})
 	}
+
+	// ඞ emitting ඞ \\
 
 	test() {
 		this.socket.emit('test');
@@ -75,6 +84,11 @@ export class SocketService {
 		this.socket.emit("playSound", sound);
 	}
 
+	setVolume(value: number) {
+		this.socket.emit("setVolume", value);
+	}
+
+	// ඞ listenin ඞ \\
 	pauseSound(){
 		this.socket.emit("pauseSound");
 	}
@@ -97,5 +111,9 @@ export class SocketService {
 
 	onBotDisconnect(res: object) {
 		this._botDisconnect.next(res);
+	}
+
+	onBotChangeVolume(value: number) {
+		this._botChangeVolume.next(value);
 	}
 }
