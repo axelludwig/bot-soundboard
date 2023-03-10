@@ -41,6 +41,10 @@ app.get('/volume', (req, res) => {
     res.send(JSON.stringify(soundManager.getVolume()));
 });
 
+app.get('/mode', (req, res) => {
+    res.send(JSON.stringify(soundManager.getMode()));
+});
+
 app.post('/sounds', (req, res) => {
     var soundPath = path.join(__dirname, process.env.soundsFolder, req.body.name);
     require("fs").writeFile(soundPath, req.body.data, 'base64', () => {

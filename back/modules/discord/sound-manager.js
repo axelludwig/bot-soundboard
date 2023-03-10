@@ -10,6 +10,7 @@ let queue = [];
 let isSoundPlaying = false;
 
 let globalPlayer = undefined;
+let globalResource = undefined;
 
 exports.playSound = async function (soundName) {
     let channel = await channelManager.getCurrentChannel();
@@ -69,6 +70,10 @@ exports.renameSound = function (name, newName){
 
 exports.getVolume = function(){
     return soundVolume;
+}
+
+exports.getMode = function(){
+    return mode;
 }
 
 exports.pauseSound = function(){
