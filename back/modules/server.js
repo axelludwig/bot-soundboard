@@ -9,6 +9,7 @@ require('dotenv').config();
 const channelManager = require('./discord/channel-manager');
 const soundManager = require('./discord/sound-manager');
 
+
 app.use(cors({
     origin: '*'
 }));

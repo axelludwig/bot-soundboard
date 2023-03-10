@@ -9,6 +9,8 @@ let mode = "overwrite" //overwrite or queue
 let queue = [];
 let isSoundPlaying = false;
 
+let globalPlayer = undefined;
+
 exports.playSound = async function (soundName) {
     let channel = await channelManager.getCurrentChannel();
 
@@ -64,29 +66,36 @@ exports.renameSound = function (name, newName){
     fs.renameSync(filePath, newPath);
 }
 
+exports.pauseSound = function(){
+    globalPlayer.pause();
+}
+
+exports.unpauseSound = function(){
+    globalPlayer.unpause();
+}
+
+
 startSound = function (soundName, voiceConnection) {
-    const player = createAudioPlayer({
-        behaviors: {
-            noSubscriber: NoSubscriberBehavior.Pause,
-        },
-    });
+    if (!globalPlayer){
+        globalPlayer = createMyAudioPlayer();
+    }
 
     let audioPath = './sounds/' + soundName + '.mp3';
     console.log("playing " + audioPath);
     const resource = createAudioResource(audioPath, { inlineVolume: true });
     resource.volume.setVolume(soundVolume);
 
-    player.play(resource);
+    globalPlayer.play(resource);
     isSoundPlaying = true;
 
-    player.on('error', error => {
+    globalPlayer.on('error', error => {
         console.error(`Error: ${error.message} with resource`);
     });
 
-    voiceConnection.subscribe(player);
+    voiceConnection.subscribe(globalPlayer);
 
     if (mode === "queue") {
-        player.on(AudioPlayerStatus.Idle, () => {
+        globalPlayer.on(AudioPlayerStatus.Idle, () => {
             //Quand le bot a fini un son
             isSoundPlaying = false;
             queue.shift();
@@ -95,4 +104,14 @@ startSound = function (soundName, voiceConnection) {
             }
         });
     }
+}
+
+function createMyAudioPlayer(){
+    let player = createAudioPlayer({
+        behaviors: {
+            noSubscriber: NoSubscriberBehavior.Play,
+        },
+    });
+
+    return player;
 }
