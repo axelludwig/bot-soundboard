@@ -11,8 +11,14 @@
         <img src="../assets/wifi.svg" class="filter-red" />
     </ng-template>
 
+    <mat-slider>
+        <input matSliderThumb>
+    </mat-slider>
+
+    <mat-slide-toggle>Slide me!</mat-slide-toggle>
+
     <div class="test">
-        <app-guilds-list  />        
-        <app-soundboard-menu [newSound]="newSound"/>
+        <app-guilds-list />
+        <app-soundboard-menu [newSound]="newSound" />
     </div>
 </div>

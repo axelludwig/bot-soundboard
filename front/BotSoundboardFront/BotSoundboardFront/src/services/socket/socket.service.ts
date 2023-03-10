@@ -6,7 +6,6 @@ import { Observable, Subject } from 'rxjs';
 	providedIn: 'root'
 })
 export class SocketService {
-
 	private _connect = new Subject<boolean>();
 	connect$ = this._connect.asObservable();
 	private _disconnect = new Subject<boolean>();
@@ -19,6 +18,8 @@ export class SocketService {
 	private _userDisconnectsChannel = new Subject<string>();
 	userDisconnectsChannel$ = this._userDisconnectsChannel.asObservable();
 
+	private _botDisconnect = new Subject<object>();
+	botDisconnect$ = this._botDisconnect.asObservable();
 
 	constructor(private socket: Socket) {
 		this.socket.on('connect', () => {
@@ -41,10 +42,9 @@ export class SocketService {
 			this.onUserDisconnect(res);
 		})
 
-		// this.socket.on('getChannelsInfosResult', (res: any) => {
-		// 	console.log(res);
-		// })
-
+		this.socket.on('botDisconnect', (res: any) => {
+			this.onBotDisconnect(res)
+		})
 	}
 
 	test() {
@@ -83,7 +83,11 @@ export class SocketService {
 		this._userChangeChannel.next(res);
 	}
 
-	onUserDisconnect(id: string){
+	onUserDisconnect(id: string) {
 		this._userDisconnectsChannel.next(id);
+	}
+
+	onBotDisconnect(res: object) {
+		this._botDisconnect.next(res);
 	}
 }
