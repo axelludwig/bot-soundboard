@@ -66,6 +66,10 @@ exports.renameSound = function (name, newName){
     fs.renameSync(filePath, newPath);
 }
 
+exports.getVolume = function(){
+    return soundVolume;
+}
+
 exports.pauseSound = function(){
     if (!globalPlayer){
         return;
