@@ -45,7 +45,7 @@ io.on('connection', (socket) => {
 
     socket.on('setMode', (data) => {
         soundManager.setMode(data);
-        io.emit('botChangeMode', data);
+        socket.broadcast.emit('botChangeMode', data);
     });
 
     socket.on('disconnect', (socket) => {
