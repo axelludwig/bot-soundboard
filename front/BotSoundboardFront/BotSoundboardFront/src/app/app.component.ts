@@ -20,7 +20,8 @@ export class AppComponent {
   public hasFiles: boolean = false;
 
   public newSound: string | null = null;
-  public volume: number | null = null;
+  public volume: number = 0;
+  public queueMode: boolean = false;
 
   constructor(socketService: SocketService, axiosService: AxiosService) {
     this.axiosService = axiosService;
@@ -37,28 +38,34 @@ export class AppComponent {
     })
 
     this.socketService.botChangeVolume$.subscribe((value: number) => {
-      console.log(value);
       this.volume = value;
+    })
+
+    this.socketService.botChangeMode$.subscribe((value: boolean) => {      
+      this.queueMode = value;
     })
   }
 
   ngOnInit() {
     this.getVolume();
+    this.getQueueMode();
   }
 
   onSliderChange(event: any) {
     this.socketService.setVolume(event.value)
   }
 
+  onToggle(event: any) {  
+    this.socketService.setMode(event.source.checked)
+  }
+
   onFileSelect(event: any) {
-    console.log("file select");
     var files = event.target.files;
     this.filesToUpload = files;
     this.hasFiles = true;
   }
 
   onFileChange() {
-    console.log("onfilechange");
     const inputNode: any = document.querySelector('#file');
     this.filesToUpload = inputNode.files;
     this.hasFiles = true;
@@ -80,7 +87,6 @@ export class AppComponent {
         options.params = params;
         this.newSound = file.name.replace(/\.[^/.]+$/, "");
         this.axiosService.post(options).then((res) => {
-          console.log(res);
           this.hasFiles = false;
           this.filesToUpload = [];
         })
@@ -97,8 +103,20 @@ export class AppComponent {
     }
     this.axiosService.get(options)
       .then((res: any) => {
-        console.log(res);
         this.volume = res
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+  }
+
+  getQueueMode() {
+    var options: GetOptions = {
+      url: "/mode"
+    }
+    this.axiosService.get(options)
+      .then((res: any) => {
+        this.queueMode = res
       })
       .catch((err) => {
         console.log(err);
@@ -121,11 +139,11 @@ export class AppComponent {
       })
   }
 
-  unpauseSound(){
+  unpauseSound() {
     this.socketService.unpauseSound();
   }
 
-  pauseSound(){
+  pauseSound() {
     this.socketService.pauseSound();
   }
 }

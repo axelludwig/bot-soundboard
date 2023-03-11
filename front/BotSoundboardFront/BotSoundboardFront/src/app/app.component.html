@@ -15,11 +15,12 @@
         <input (dragEnd)="onSliderChange($event)" matSliderThumb [(ngModel)]="volume">
     </mat-slider>
     <br>
-    <mat-slide-toggle>Slide me!</mat-slide-toggle>
+
+    <mat-slide-toggle  [checked]="queueMode" (change)="onToggle($event)" >Slide me!</mat-slide-toggle>
 
     <button mat-fab color="primary" (click)="unpauseSound()">
         <mat-icon>play_arrow</mat-icon>
-      </button>
+      </button>      
     <button mat-fab color="primary" (click)="pauseSound()">
         <mat-icon>pause</mat-icon>
       </button>

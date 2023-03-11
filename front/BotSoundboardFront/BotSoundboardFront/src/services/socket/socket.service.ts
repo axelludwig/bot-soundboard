@@ -23,6 +23,8 @@ export class SocketService {
 
 	private _botChangeVolume = new Subject<number>();
 	botChangeVolume$ = this._botChangeVolume.asObservable();
+	private _botChangeMode = new Subject<boolean>();
+	botChangeMode$ = this._botChangeMode.asObservable();
 
 	constructor(private socket: Socket) {
 		this.socket.on('connect', () => {
@@ -51,6 +53,10 @@ export class SocketService {
 
 		this.socket.on('botChangeVolume', (data: number) => {
 			this.onBotChangeVolume(data);
+		})
+
+		this.socket.on('botChangeMode', (value: boolean) =>  {
+			this.onBotChangeMode(value);
 		})
 	}
 
@@ -88,6 +94,10 @@ export class SocketService {
 		this.socket.emit("setVolume", value);
 	}
 
+	setMode(value: boolean) {		
+		this.socket.emit("setMode", value);
+	}
+
 	// ඞ listenin ඞ \\
 	pauseSound(){
 		this.socket.emit("pauseSound");
@@ -115,5 +125,9 @@ export class SocketService {
 
 	onBotChangeVolume(value: number) {
 		this._botChangeVolume.next(value);
+	}
+
+	onBotChangeMode(value: boolean ) {
+		this._botChangeMode.next(value);
 	}
 }

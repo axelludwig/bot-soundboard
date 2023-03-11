@@ -76,7 +76,6 @@ export class GuildsListComponent {
       .then((res: any) => {
         res.map((c: Channel) => {
           this.channels.push(c)
-          console.log(c.members);
         })
       })
       .catch((err) => {

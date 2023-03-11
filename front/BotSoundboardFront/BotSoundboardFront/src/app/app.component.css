@@ -15,3 +15,8 @@
     margin-top: 2vh;
     filter: invert(54%) sepia(9%) saturate(3650%) hue-rotate(314deg) brightness(100%) contrast(103%);
 }
+
+mat-slider {
+    width: 800px;
+  }
+  
