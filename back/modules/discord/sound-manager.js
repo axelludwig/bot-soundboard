@@ -1,4 +1,4 @@
-const { createAudioPlayer, createAudioResource, AudioPlayerStatus, NoSubscriberBehavior  } = require('@discordjs/voice');
+const { createAudioPlayer, createAudioResource, AudioPlayerStatus, NoSubscriberBehavior, getVoiceConnection  } = require('@discordjs/voice');
 const channelManager = require('./channel-manager');
 const fs = require('fs');
 const path = require('path');
@@ -21,7 +21,10 @@ exports.playSound = async function (soundName) {
         return;
     }
 
-    let voiceConnection = await channelManager.joinChannel(channel.id);
+    let voiceConnection = getVoiceConnection(channel.guildId);
+    if (!voiceConnection){
+        voiceConnection = await channelManager.joinChannel(channel.id);
+    }
 
     if (mode === "queue") {
         queue.push(soundName);
@@ -108,16 +111,19 @@ startSound = function (soundName, voiceConnection) {
 
     globalPlayer.on('error', error => {
         console.error(`Error: ${error.message} with resource`);
+        globalPlayer.stop();
         globalPlayer = undefined;
         globalResource = undefined;
+        isSoundPlaying = false;
     });
 
-    console.log("playing " + soundName);
+    console.log("playing '" + soundName + "'");
     voiceConnection.subscribe(globalPlayer);
 
     if (mode === "queue") {
         globalPlayer.on(AudioPlayerStatus.Idle, () => {
             //Quand le bot a fini un son
+            globalPlayer.stop();
             globalPlayer = undefined;
             globalResource = undefined;
             isSoundPlaying = false;
