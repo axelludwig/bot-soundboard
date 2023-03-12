@@ -1,4 +1,4 @@
-const { createAudioPlayer, createAudioResource, AudioPlayerStatus, NoSubscriberBehavior, getVoiceConnection  } = require('@discordjs/voice');
+const { createAudioPlayer, createAudioResource, AudioPlayerStatus, NoSubscriberBehavior, getVoiceConnection, VoiceConnectionStatus  } = require('@discordjs/voice');
 const channelManager = require('./channel-manager');
 const fs = require('fs');
 const path = require('path');
@@ -58,6 +58,7 @@ exports.exportSounds = function () {
 exports.setMode = function(newMode){
     if (newMode === "queue" || newMode === "overwrite"){
         mode = newMode;
+        console.log("mode set to " + mode);
     }
     else{
         //TOTO erreur mode non reconnu
@@ -109,14 +110,6 @@ startSound = function (soundName, voiceConnection) {
     globalPlayer.play(globalResource);
     isSoundPlaying = true;
 
-    globalPlayer.on('error', error => {
-        console.error(`Error: ${error.message} with resource`);
-        globalPlayer.stop();
-        globalPlayer = undefined;
-        globalResource = undefined;
-        isSoundPlaying = false;
-    });
-
     console.log("playing '" + soundName + "'");
     voiceConnection.subscribe(globalPlayer);
 
@@ -140,6 +133,18 @@ function createMyAudioPlayer(){
         behaviors: {
             noSubscriber: NoSubscriberBehavior.Play,
         },
+    });
+
+    player.on('error', error => {
+        console.error(`Error: ${error.message} with resource`);
+        player.stop();
+        player = undefined;
+        globalResource = undefined;
+        isSoundPlaying = false;
+    });
+
+    player.on('stateChange', msg => {
+        console.log("test");
     });
 
     return player;
