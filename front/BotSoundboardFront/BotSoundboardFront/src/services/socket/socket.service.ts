@@ -23,7 +23,7 @@ export class SocketService {
 
 	private _botChangeVolume = new Subject<number>();
 	botChangeVolume$ = this._botChangeVolume.asObservable();
-	private _botChangeMode = new Subject<boolean>();
+	private _botChangeMode = new Subject<string>();
 	botChangeMode$ = this._botChangeMode.asObservable();
 
 	constructor(private socket: Socket) {
@@ -55,7 +55,7 @@ export class SocketService {
 			this.onBotChangeVolume(data);
 		})
 
-		this.socket.on('botChangeMode', (value: boolean) =>  {
+		this.socket.on('botChangeMode', (value: string) =>  {
 			this.onBotChangeMode(value);
 		})
 	}
@@ -127,7 +127,7 @@ export class SocketService {
 		this._botChangeVolume.next(value);
 	}
 
-	onBotChangeMode(value: boolean ) {
+	onBotChangeMode(value: string ) {
 		this._botChangeMode.next(value);
 	}
 }

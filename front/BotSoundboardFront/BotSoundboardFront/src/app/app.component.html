@@ -16,18 +16,22 @@
     </mat-slider>
     <br>
 
-    <mat-slide-toggle [checked]="queueMode" (change)="onToggle($event)">Slide me!</mat-slide-toggle>
+    <!-- <mat-slide-toggle [checked]="queueMode" (change)="onToggle($event)">Slide me!</mat-slide-toggle> -->
 
-    <button mat-mini-fab matTooltip="Primary" color="primary" aria-label="Example mini fab with a heart icon">
-        <mat-icon>favorite</mat-icon>
-    </button>
-
-    <button mat-fab color="primary" (click)="unpauseSound()">
+    <button mat-mini-fab matTooltip="Primary" color="primary" (click)=unpauseSound()>
         <mat-icon>play_arrow</mat-icon>
     </button>
-    <button mat-fab color="primary" (click)="pauseSound()">
+
+    <button mat-mini-fab matTooltip="Primary" color="primary" (click)="pauseSound()">
         <mat-icon>pause</mat-icon>
-    </button>  
+    </button>
+
+    <label id="example-radio-group-label"> mode </label>
+    <mat-radio-group class="example-radio-group" [(ngModel)]="queueMode">
+        <mat-radio-button (change)="onRadioClick($event)" class="" *ngFor="let mode of queueModes" [value]="mode">
+            {{mode}}
+        </mat-radio-button>
+    </mat-radio-group>
 
     <div class="test">
         <app-guilds-list />

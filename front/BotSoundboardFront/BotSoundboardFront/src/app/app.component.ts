@@ -22,7 +22,8 @@ export class AppComponent {
 
   public newSound: string | null = null;
   public volume: number = 0;
-  public queueMode: boolean = false;
+  public queueMode: string = '';
+  queueModes: string[] = ['queue', 'overwrite'];
 
   constructor(socketService: SocketService, axiosService: AxiosService) {
     this.axiosService = axiosService;
@@ -42,7 +43,7 @@ export class AppComponent {
       this.volume = value;
     })
 
-    this.socketService.botChangeMode$.subscribe((value: boolean) => {      
+    this.socketService.botChangeMode$.subscribe((value: string) => {
       this.queueMode = value;
     })
   }
@@ -56,8 +57,8 @@ export class AppComponent {
     this.socketService.setVolume(event.value)
   }
 
-  onToggle(event: any) {  
-    this.socketService.setMode(event.source.checked)
+  onRadioClick(event: any) {
+    this.socketService.setMode(event.value)
   }
 
   onFileSelect(event: any) {
@@ -97,7 +98,7 @@ export class AppComponent {
       }
     })
   }
-  
+
   getVolume() {
     var options: GetOptions = {
       url: "/volume"

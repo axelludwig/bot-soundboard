@@ -49,7 +49,7 @@ export class SoundboardMenuComponent {
     this.socketService.playSound(sound);
   }
 
-  textChange() {
+  textChange() {  
     this.sounds = this.soundsCopy;
     this.sounds = this.sounds.filter((sound) => {
       var s = sound.toLocaleLowerCase();
@@ -60,6 +60,6 @@ export class SoundboardMenuComponent {
 
   clearText() {
     this.searchValue = "";
-    this.sounds = this.soundsCopy
+    this.sounds = this.soundsCopy;
   }
 }
