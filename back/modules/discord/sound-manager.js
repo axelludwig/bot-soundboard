@@ -26,8 +26,6 @@ exports.playSound = async function (soundName) {
         voiceConnection = await channelManager.joinChannel(channel.id);
     }
 
-    voiceConnection.configureNetworking();
-
     if (mode === "queue") {
         queue.push(soundName);
         if (!isSoundPlaying){
@@ -108,6 +106,8 @@ startSound = function (soundName, voiceConnection) {
     }
 
     globalResource = createMyAudioResource(soundName);
+
+    voiceConnection.configureNetworking();
 
     globalPlayer.play(globalResource);
     isSoundPlaying = true;
