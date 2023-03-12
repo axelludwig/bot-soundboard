@@ -7,7 +7,7 @@
 }
 
 .channel {
-    color: black;
+    /* color: black; */
     display: inline-block;
     user-select: none;
 }
@@ -19,11 +19,16 @@
 }
 
 .selected-channel {
-    color: green;
+    color: #989aa2;
+
 }
 
 .members {
-    color: black;
+    /* color: black; */
     padding-left: 2vw;
     user-select: none;
+}
+
+.divider{
+    background-color: white;
 }

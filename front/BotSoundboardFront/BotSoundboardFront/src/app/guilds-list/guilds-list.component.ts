@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { AxiosService, GetOptions } from "src/services/axios/axios.service"
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { SocketService } from 'src/services/socket/socket.service';
-
 
 export interface Channel {
   name: string,

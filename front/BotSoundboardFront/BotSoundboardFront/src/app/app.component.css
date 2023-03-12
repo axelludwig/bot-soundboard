@@ -2,6 +2,11 @@
     display: block;
 }
 
+body{
+    background-color: #2b2d31;
+    color: #989aa2;
+}
+
 .test{
     display: flex;
 }

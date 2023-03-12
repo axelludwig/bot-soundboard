@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { SocketService } from 'src/services/socket/socket.service';
 import { AxiosService, GetOptions } from "src/services/axios/axios.service"
 import { Params } from '@angular/router';
@@ -6,7 +6,8 @@ import { Params } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
   title = 'BotSoundboardFront';
@@ -96,7 +97,7 @@ export class AppComponent {
       }
     })
   }
-
+  
   getVolume() {
     var options: GetOptions = {
       url: "/volume"

@@ -15,6 +15,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SoundboardMenuComponent } from './soundboard-menu/soundboard-menu.component';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon'
+import { MatDividerModule } from '@angular/material/divider'
+import { ReactiveFormsModule} from '@angular/forms';
 
 const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
@@ -24,7 +26,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
     GuildsListComponent,
     SoundboardMenuComponent
   ],
-  imports: [CommonModule, MatProgressSpinnerModule, MatSliderModule, MatIconModule, FormsModule,
+  imports: [ReactiveFormsModule,CommonModule,MatDividerModule, MatProgressSpinnerModule, MatSliderModule, MatIconModule, FormsModule,
     BrowserModule, SocketIoModule.forRoot(config), MatSlideToggleModule, MatCheckboxModule, MatButtonModule, BrowserAnimationsModule, MatInputModule
   ],
   exports: [],

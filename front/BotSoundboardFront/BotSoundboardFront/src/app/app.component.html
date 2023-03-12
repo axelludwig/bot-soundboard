@@ -16,17 +16,23 @@
     </mat-slider>
     <br>
 
-    <mat-slide-toggle  [checked]="queueMode" (change)="onToggle($event)" >Slide me!</mat-slide-toggle>
+    <mat-slide-toggle [checked]="queueMode" (change)="onToggle($event)">Slide me!</mat-slide-toggle>
+
+    <button mat-mini-fab matTooltip="Primary" color="primary" aria-label="Example mini fab with a heart icon">
+        <mat-icon>favorite</mat-icon>
+    </button>
 
     <button mat-fab color="primary" (click)="unpauseSound()">
         <mat-icon>play_arrow</mat-icon>
-      </button>      
+    </button>
     <button mat-fab color="primary" (click)="pauseSound()">
         <mat-icon>pause</mat-icon>
-      </button>
+    </button>  
 
     <div class="test">
         <app-guilds-list />
         <app-soundboard-menu [newSound]="newSound" />
     </div>
+
+
 </div>
